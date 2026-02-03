@@ -8,7 +8,6 @@ from __future__ import annotations
 
 import asyncio
 import threading
-import time
 from collections import deque
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -16,10 +15,10 @@ from typing import TYPE_CHECKING, Any, Callable
 
 import pandas as pd
 from starlette.middleware.base import BaseHTTPMiddleware
-from starlette.requests import Request
-from starlette.responses import JSONResponse, Response
 
 if TYPE_CHECKING:
+    from starlette.requests import Request
+    from starlette.responses import Response
     from starlette.types import ASGIApp
 
     from driftwatch import Monitor
@@ -117,6 +116,7 @@ class DriftMiddleware(BaseHTTPMiddleware):
             samples=deque(maxlen=buffer_size),
             predictions=deque(maxlen=buffer_size),
         )
+        self._background_tasks: set[asyncio.Task[None]] = set()
 
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
         """Process request and collect features for drift monitoring."""
@@ -164,7 +164,9 @@ class DriftMiddleware(BaseHTTPMiddleware):
 
         # Check if we should run drift detection
         if self._should_check_drift():
-            asyncio.create_task(self._run_drift_check())
+            task = asyncio.create_task(self._run_drift_check())
+            self._background_tasks.add(task)
+            task.add_done_callback(self._background_tasks.discard)
 
         return response
 
