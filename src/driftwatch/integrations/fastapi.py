@@ -31,10 +31,16 @@ class DriftState:
     """Thread-safe state for drift monitoring."""
 
     samples: deque[dict[str, Any]] = field(default_factory=lambda: deque(maxlen=10000))
+    predictions: deque[dict[str, Any]] = field(default_factory=lambda: deque(maxlen=10000))
     last_report: DriftReport | None = None
     last_check_time: datetime | None = None
     request_count: int = 0
     lock: threading.Lock = field(default_factory=threading.Lock)
+
+    def add_prediction(self, prediction: dict[str, Any]) -> None:
+        """Add a prediction to the buffer."""
+        with self.lock:
+            self.predictions.append(prediction)
 
     def add_sample(self, sample: dict[str, Any]) -> None:
         """Add a sample to the buffer."""
@@ -93,17 +99,24 @@ class DriftMiddleware(BaseHTTPMiddleware):
         app: ASGIApp,
         monitor: Monitor,
         feature_extractor: Callable[[dict[str, Any]], dict[str, Any]] | None = None,
+        prediction_extractor: Callable[[dict[str, Any]], dict[str, Any]] | None = None,
         check_interval: int = 100,
         min_samples: int = 50,
+        buffer_size: int = 10000,
         enabled: bool = True,
     ) -> None:
         super().__init__(app)
         self.monitor = monitor
         self.feature_extractor = feature_extractor or (lambda x: x)
+        self.prediction_extractor = prediction_extractor
         self.check_interval = check_interval
         self.min_samples = min_samples
+        self.buffer_size = buffer_size
         self.enabled = enabled
-        self.state = DriftState()
+        self.state = DriftState(
+            samples=deque(maxlen=buffer_size),
+            predictions=deque(maxlen=buffer_size),
+        )
 
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
         """Process request and collect features for drift monitoring."""
@@ -135,6 +148,19 @@ class DriftMiddleware(BaseHTTPMiddleware):
 
         # Process the request
         response = await call_next(request)
+
+        # Try to extract predictions from response
+        if self.prediction_extractor is not None:
+            try:
+                # For JSONResponse, we can access the body
+                if hasattr(response, 'body'):
+                    import json
+                    response_body = json.loads(response.body)
+                    prediction = self.prediction_extractor(response_body)
+                    if prediction and isinstance(prediction, dict):
+                        self.state.add_prediction(prediction)
+            except Exception:
+                pass
 
         # Check if we should run drift detection
         if self._should_check_drift():
