@@ -12,7 +12,7 @@ import numpy as np
 import pandas as pd
 import uvicorn
 from fastapi import FastAPI
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse
 
 from driftwatch import Monitor
 
@@ -20,14 +20,16 @@ from driftwatch import Monitor
 # 1. SHARED STATE (Global - accessible by both middleware and routes)
 # =============================================================================
 
+
 class SharedDriftState:
     """Global state for drift monitoring."""
-    
+
     def __init__(self) -> None:
         self.samples: list[dict] = []
         self.last_report = None
         self.last_check_time = None
         self.request_count = 0
+
 
 # Global instance
 DRIFT_STATE = SharedDriftState()
@@ -37,16 +39,17 @@ DRIFT_STATE = SharedDriftState()
 # =============================================================================
 
 np.random.seed(42)
-reference_data = pd.DataFrame({
-    "age": np.random.normal(35, 10, 1000).clip(18, 80),
-    "income": np.random.lognormal(10.5, 0.5, 1000),
-    "credit_score": np.random.normal(700, 50, 1000).clip(300, 850),
-    "loan_amount": np.random.lognormal(9, 0.8, 1000),
-})
+reference_data = pd.DataFrame(
+    {
+        "age": np.random.normal(35, 10, 1000).clip(18, 80),
+        "income": np.random.lognormal(10.5, 0.5, 1000),
+        "credit_score": np.random.normal(700, 50, 1000).clip(300, 850),
+        "loan_amount": np.random.lognormal(9, 0.8, 1000),
+    }
+)
 
 monitor = Monitor(
-    reference_data=reference_data,
-    thresholds={"psi": 0.15, "ks_pvalue": 0.05}
+    reference_data=reference_data, thresholds={"psi": 0.15, "ks_pvalue": 0.05}
 )
 
 MONITORED_FEATURES = ["age", "income", "credit_score", "loan_amount"]
@@ -62,22 +65,24 @@ app = FastAPI(title="DriftWatch Demo")
 @app.post("/predict")
 async def predict(age: float, income: float, credit_score: float, loan_amount: float):
     """Prediction endpoint that also collects samples."""
-    
+
     # Store sample in global state
-    DRIFT_STATE.samples.append({
-        "age": age,
-        "income": income,
-        "credit_score": credit_score,
-        "loan_amount": loan_amount,
-    })
+    DRIFT_STATE.samples.append(
+        {
+            "age": age,
+            "income": income,
+            "credit_score": credit_score,
+            "loan_amount": loan_amount,
+        }
+    )
     DRIFT_STATE.request_count += 1
-    
+
     # Dummy prediction
     score = 0.5
     score += 0.1 if credit_score > 700 else -0.1
     score += 0.1 if income > 50000 else -0.1
     approval_prob = max(0, min(1, score + random.uniform(-0.1, 0.1)))
-    
+
     return {
         "approval_probability": round(approval_prob, 3),
         "decision": "APPROVED" if approval_prob > 0.6 else "DENIED",
@@ -93,13 +98,15 @@ async def drift_status():
             "samples_collected": len(DRIFT_STATE.samples),
             "total_requests": DRIFT_STATE.request_count,
         }
-    
+
     return {
         "status": DRIFT_STATE.last_report.status.value,
         "has_drift": DRIFT_STATE.last_report.has_drift(),
         "drift_ratio": DRIFT_STATE.last_report.drift_ratio(),
         "drifted_features": DRIFT_STATE.last_report.drifted_features(),
-        "last_check": DRIFT_STATE.last_check_time.isoformat() if DRIFT_STATE.last_check_time else None,
+        "last_check": DRIFT_STATE.last_check_time.isoformat()
+        if DRIFT_STATE.last_check_time
+        else None,
         "samples_collected": len(DRIFT_STATE.samples),
         "total_requests": DRIFT_STATE.request_count,
     }
@@ -117,14 +124,16 @@ async def drift_report():
 async def trigger_check():
     """Manually trigger drift check."""
     if len(DRIFT_STATE.samples) < MIN_SAMPLES:
-        return {"error": f"Not enough samples. Need {MIN_SAMPLES}, have {len(DRIFT_STATE.samples)}"}
-    
+        return {
+            "error": f"Not enough samples. Need {MIN_SAMPLES}, have {len(DRIFT_STATE.samples)}"
+        }
+
     production_df = pd.DataFrame(DRIFT_STATE.samples)
     report = monitor.check(production_df)
-    
+
     DRIFT_STATE.last_report = report
     DRIFT_STATE.last_check_time = datetime.now(timezone.utc)
-    
+
     return {
         "status": report.status.value,
         "has_drift": report.has_drift(),
@@ -175,7 +184,7 @@ DASHBOARD_HTML = """
             padding: 2rem;
         }
         .container { max-width: 1200px; margin: 0 auto; }
-        
+
         header {
             display: flex;
             justify-content: space-between;
@@ -206,11 +215,11 @@ DASHBOARD_HTML = """
             border-radius: 50%;
             animation: pulse 1.5s infinite;
         }
-        
+
         .grid { display: grid; grid-template-columns: 280px 1fr; gap: 2rem; }
-        
+
         .sidebar { display: flex; flex-direction: column; gap: 1rem; }
-        
+
         .panel {
             background: var(--card);
             border: 1px solid rgba(255,255,255,0.05);
@@ -218,7 +227,7 @@ DASHBOARD_HTML = """
             padding: 1.5rem;
             backdrop-filter: blur(20px);
         }
-        
+
         .panel-title {
             font-size: 0.75rem;
             text-transform: uppercase;
@@ -226,7 +235,7 @@ DASHBOARD_HTML = """
             color: var(--muted);
             margin-bottom: 1rem;
         }
-        
+
         button {
             width: 100%;
             padding: 0.9rem;
@@ -257,11 +266,11 @@ DASHBOARD_HTML = """
         }
         button:hover { transform: translateY(-2px); opacity: 0.95; }
         button:active { transform: scale(0.98); }
-        
+
         .main { display: flex; flex-direction: column; gap: 1.5rem; }
-        
+
         .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-        
+
         .kpi {
             background: var(--card);
             border: 1px solid rgba(255,255,255,0.05);
@@ -274,11 +283,11 @@ DASHBOARD_HTML = """
             font-weight: 700;
             font-family: 'JetBrains Mono', monospace;
         }
-        
+
         table { width: 100%; border-collapse: collapse; }
         th { text-align: left; color: var(--muted); font-weight: 500; padding: 0.8rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem; }
         td { padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; }
-        
+
         .badge {
             padding: 0.2rem 0.6rem;
             border-radius: 20px;
@@ -288,10 +297,10 @@ DASHBOARD_HTML = """
         }
         .badge.drift { background: rgba(248, 113, 113, 0.2); color: var(--critical); }
         .badge.ok { background: rgba(52, 211, 153, 0.2); color: var(--success); }
-        
+
         .log { max-height: 150px; overflow-y: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); }
         .log-entry { margin-bottom: 0.2rem; }
-        
+
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
     </style>
 </head>
@@ -301,7 +310,7 @@ DASHBOARD_HTML = """
             <h1>🔍 DriftWatch Monitor</h1>
             <div class="live-badge"><div class="live-dot"></div> Live</div>
         </header>
-        
+
         <div class="grid">
             <div class="sidebar">
                 <div class="panel">
@@ -319,7 +328,7 @@ DASHBOARD_HTML = """
                     <div class="log" id="log"></div>
                 </div>
             </div>
-            
+
             <div class="main">
                 <div class="kpis">
                     <div class="kpi">
@@ -335,7 +344,7 @@ DASHBOARD_HTML = """
                         <div class="kpi-value" id="ratio">0%</div>
                     </div>
                 </div>
-                
+
                 <div class="panel">
                     <div class="panel-title">Feature Analysis</div>
                     <table>
@@ -350,24 +359,24 @@ DASHBOARD_HTML = """
             </div>
         </div>
     </div>
-    
+
     <script>
         const log = (msg) => {
             const el = document.getElementById('log');
             el.innerHTML = `<div class="log-entry">${new Date().toLocaleTimeString()} ${msg}</div>` + el.innerHTML;
         };
-        
+
         const update = async () => {
             const res = await fetch('/drift/status');
             const d = await res.json();
-            
+
             const statusEl = document.getElementById('status');
             statusEl.textContent = d.status;
             statusEl.style.color = { OK: 'var(--success)', WARNING: 'var(--warning)', CRITICAL: 'var(--critical)', NO_DATA: 'var(--muted)' }[d.status] || 'var(--text)';
-            
+
             document.getElementById('samples').textContent = d.samples_collected;
             document.getElementById('ratio').textContent = d.drift_ratio ? (d.drift_ratio * 100).toFixed(0) + '%' : '0%';
-            
+
             if (d.status !== 'NO_DATA') {
                 const rep = await fetch('/drift/report');
                 const r = await rep.json();
@@ -384,7 +393,7 @@ DASHBOARD_HTML = """
                 }
             }
         };
-        
+
         const send = async (n, drifted) => {
             log(`Sending ${n} ${drifted ? 'drifted' : 'normal'} samples...`);
             for (let i = 0; i < n; i++) {
@@ -396,7 +405,7 @@ DASHBOARD_HTML = """
             log('Done!');
             update();
         };
-        
+
         const check = async () => {
             log('Running drift check...');
             const res = await fetch('/drift/check', { method: 'POST' });
@@ -405,14 +414,14 @@ DASHBOARD_HTML = """
             else { log('Result: ' + d.status + (d.has_drift ? ' (Drift detected!)' : '')); }
             update();
         };
-        
+
         const reset = async () => {
             await fetch('/drift/reset', { method: 'POST' });
             log('Buffer reset.');
             document.getElementById('tbody').innerHTML = '<tr><td colspan="5" style="text-align:center; color: var(--muted); padding: 2rem;">Buffer cleared.</td></tr>';
             update();
         };
-        
+
         update();
         setInterval(update, 2000);
         log('Ready.');
@@ -420,6 +429,7 @@ DASHBOARD_HTML = """
 </body>
 </html>
 """
+
 
 @app.get("/", response_class=HTMLResponse)
 async def dashboard():

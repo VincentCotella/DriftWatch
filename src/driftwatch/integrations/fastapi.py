@@ -30,7 +30,9 @@ class DriftState:
     """Thread-safe state for drift monitoring."""
 
     samples: deque[dict[str, Any]] = field(default_factory=lambda: deque(maxlen=10000))
-    predictions: deque[dict[str, Any]] = field(default_factory=lambda: deque(maxlen=10000))
+    predictions: deque[dict[str, Any]] = field(
+        default_factory=lambda: deque(maxlen=10000)
+    )
     last_report: DriftReport | None = None
     last_check_time: datetime | None = None
     request_count: int = 0
@@ -153,8 +155,9 @@ class DriftMiddleware(BaseHTTPMiddleware):
         if self.prediction_extractor is not None:
             try:
                 # For JSONResponse, we can access the body
-                if hasattr(response, 'body'):
+                if hasattr(response, "body"):
                     import json
+
                     response_body = json.loads(response.body)
                     prediction = self.prediction_extractor(response_body)
                     if prediction and isinstance(prediction, dict):
@@ -187,9 +190,7 @@ class DriftMiddleware(BaseHTTPMiddleware):
 
             # Run check in thread pool to avoid blocking
             loop = asyncio.get_event_loop()
-            report = await loop.run_in_executor(
-                None, self.monitor.check, production_df
-            )
+            report = await loop.run_in_executor(None, self.monitor.check, production_df)
             self.state.update_report(report)
 
         except Exception:
