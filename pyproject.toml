@@ -158,6 +158,10 @@ explicit_package_bases = true
 module = [
     "scipy.*",
     "mlflow.*",
+    "starlette.*",
+    "fastapi.*",
+    "pandas.*",
+    "numpy.*",
 ]
 ignore_missing_imports = true
 
