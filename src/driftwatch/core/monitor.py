@@ -4,14 +4,14 @@ Monitor class for detecting drift between reference and production data.
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
-
-import pandas as pd
+from typing import TYPE_CHECKING, Any, ClassVar
 
 from driftwatch.core.report import DriftReport, FeatureDriftResult
 from driftwatch.detectors import get_detector
 
 if TYPE_CHECKING:
+    import pandas as pd
+
     from driftwatch.detectors.base import BaseDetector
 
 
@@ -40,7 +40,7 @@ class Monitor:
         >>> print(report.has_drift())
     """
 
-    DEFAULT_THRESHOLDS: dict[str, float] = {
+    DEFAULT_THRESHOLDS: ClassVar[dict[str, float]] = {
         "psi": 0.2,
         "ks_pvalue": 0.05,
         "wasserstein": 0.1,

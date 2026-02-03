@@ -2,11 +2,15 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import numpy as np
-import pandas as pd
 from scipy import stats
 
 from driftwatch.detectors.base import BaseDetector, DetectionResult
+
+if TYPE_CHECKING:
+    import pandas as pd
 
 
 class KSDetector(BaseDetector):
@@ -183,10 +187,7 @@ class WassersteinDetector(BaseDetector):
 
         # Normalize by reference std for interpretability
         ref_std = np.std(ref_clean)
-        if ref_std > 0:
-            normalized_distance = distance / ref_std
-        else:
-            normalized_distance = distance
+        normalized_distance = distance / ref_std if ref_std > 0 else distance
 
         return DetectionResult(
             has_drift=normalized_distance >= self.threshold,

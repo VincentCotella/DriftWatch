@@ -2,13 +2,15 @@
 
 from __future__ import annotations
 
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from driftwatch.detectors.base import BaseDetector
 from driftwatch.detectors.categorical import ChiSquaredDetector
 from driftwatch.detectors.numerical import KSDetector, PSIDetector
+
+if TYPE_CHECKING:
+    from driftwatch.detectors.base import BaseDetector
 
 
 def get_detector(dtype: np.dtype[Any], thresholds: dict[str, float]) -> BaseDetector:

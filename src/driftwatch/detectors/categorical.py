@@ -2,11 +2,15 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import numpy as np
-import pandas as pd
 from scipy import stats
 
 from driftwatch.detectors.base import BaseDetector, DetectionResult
+
+if TYPE_CHECKING:
+    import pandas as pd
 
 
 class ChiSquaredDetector(BaseDetector):
