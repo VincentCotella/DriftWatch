@@ -24,147 +24,20 @@ DriftWatch is an open-source Python library for detecting **data drift** and **m
 
 ## 🏗️ Architecture
 
-```mermaid
-graph TB
-    subgraph "📦 DriftWatch Core"
-        Monitor["🔍 Monitor"]
-        Report["📊 DriftReport"]
-        
-        subgraph "🧪 Detectors"
-            KS["KS Test"]
-            PSI["PSI"]
-            Wasserstein["Wasserstein"]
-            Chi2["Chi-Squared"]
-        end
-    end
-    
-    subgraph "📥 Data Sources"
-        RefData["📁 Reference Data<br/>(Training)"]
-        ProdData["📁 Production Data"]
-    end
-    
-    subgraph "🔌 Integrations"
-        FastAPI["⚡ FastAPI<br/>Middleware"]
-        CLI["💻 CLI"]
-        MLflow["📈 MLflow"]
-        Slack["💬 Slack<br/>Alerts"]
-    end
-    
-    RefData --> Monitor
-    ProdData --> Monitor
-    Monitor --> KS & PSI & Wasserstein & Chi2
-    KS & PSI & Wasserstein & Chi2 --> Report
-    Report --> FastAPI & CLI & MLflow & Slack
-    
-    style Monitor fill:#4CAF50,color:#fff
-    style Report fill:#2196F3,color:#fff
+For detailed architecture diagrams including workflow, decision logic, and CI/CD pipeline, see **[docs/architecture.md](docs/architecture.md)**.
+
 ```
-
----
-
-## 🔄 Drift Detection Workflow
-
-```mermaid
-sequenceDiagram
-    participant User
-    participant Monitor
-    participant Detector
-    participant Report
-    participant Alert
-    
-    User->>Monitor: Initialize with reference_data
-    Monitor->>Monitor: Setup detectors per feature type
-    
-    User->>Monitor: check(production_data)
-    
-    loop For each feature
-        Monitor->>Detector: detect(ref_series, prod_series)
-        Detector->>Detector: Calculate statistic
-        Detector-->>Monitor: DetectionResult
-    end
-    
-    Monitor->>Report: Create DriftReport
-    Report->>Report: Compute status (OK/WARNING/CRITICAL)
-    Report-->>User: Return report
-    
-    alt Drift Detected
-        User->>Alert: send(report)
-        Alert-->>User: 🚨 Notification sent
-    end
-```
-
----
-
-## 📊 How Drift Detection Works
-
-```mermaid
-flowchart LR
-    subgraph "Training Phase"
-        Train["🎓 Train Model"]
-        Save["💾 Save Reference<br/>Distribution"]
-    end
-    
-    subgraph "Production Phase"
-        Infer["🔮 Model Inference"]
-        Collect["📥 Collect Data"]
-    end
-    
-    subgraph "Monitoring Phase"
-        Compare["⚖️ Compare<br/>Distributions"]
-        Decision{Drift?}
-        OK["✅ OK"]
-        Alert["🚨 Alert"]
-        Retrain["🔄 Retrain"]
-    end
-    
-    Train --> Save
-    Save --> Compare
-    Infer --> Collect --> Compare
-    Compare --> Decision
-    Decision -->|No| OK
-    Decision -->|Yes| Alert --> Retrain
-    Retrain --> Train
-    
-    style Decision fill:#FF9800,color:#fff
-    style Alert fill:#f44336,color:#fff
-    style OK fill:#4CAF50,color:#fff
-```
-
----
-
-## 🧠 Decision Logic
-
-```mermaid
-graph TD
-    Start["🔍 Check Production Data"]
-    
-    Start --> Loop["For each feature"]
-    Loop --> TypeCheck{Numerical?}
-    
-    TypeCheck -->|Yes| NumDetector["Use PSI/KS Detector"]
-    TypeCheck -->|No| CatDetector["Use Chi² Detector"]
-    
-    NumDetector --> CalcScore["Calculate Score"]
-    CatDetector --> CalcScore
-    
-    CalcScore --> ThresholdCheck{Score > Threshold?}
-    ThresholdCheck -->|Yes| MarkDrift["⚠️ Mark as Drift"]
-    ThresholdCheck -->|No| MarkOK["✅ Mark as OK"]
-    
-    MarkDrift --> Aggregate
-    MarkOK --> Aggregate
-    
-    Aggregate["Aggregate Results"]
-    Aggregate --> RatioCheck{Drift Ratio}
-    
-    RatioCheck -->|0%| StatusOK["🟢 Status: OK"]
-    RatioCheck -->|< 50%| StatusWarn["🟡 Status: WARNING"]
-    RatioCheck -->|≥ 50%| StatusCrit["🔴 Status: CRITICAL"]
-    
-    style MarkDrift fill:#FF9800,color:#fff
-    style StatusCrit fill:#f44336,color:#fff
-    style StatusWarn fill:#FF9800,color:#fff
-    style StatusOK fill:#4CAF50,color:#fff
+┌─────────────────────────────────────────────────────────────────┐
+│                        DriftWatch                               │
+├─────────────────────────────────────────────────────────────────┤
+│  Reference Data  ──►  Monitor  ──►  Detectors  ──►  DriftReport │
+│  Production Data ──►           │    • PSI                       │
+│                                │    • KS Test                   │
+│                                │    • Wasserstein               │
+│                                │    • Chi-Squared               │
+├─────────────────────────────────────────────────────────────────┤
+│  Integrations: FastAPI │ CLI │ MLflow │ Slack Alerts            │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ---
