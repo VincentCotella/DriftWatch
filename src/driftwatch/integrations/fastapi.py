@@ -123,11 +123,11 @@ class DriftMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
         """Process request and collect features for drift monitoring."""
         if not self.enabled:
-            return await call_next(request)
+            return await call_next(request)  # type: ignore[no-any-return]
 
         # Skip non-POST requests and internal endpoints
         if request.method != "POST" or request.url.path.startswith("/drift"):
-            return await call_next(request)
+            return await call_next(request)  # type: ignore[no-any-return]
 
         # Try to extract features from request body
         try:
@@ -149,7 +149,7 @@ class DriftMiddleware(BaseHTTPMiddleware):
             pass
 
         # Process the request
-        response = await call_next(request)
+        response: Response = await call_next(request)
 
         # Try to extract predictions from response
         if self.prediction_extractor is not None:
