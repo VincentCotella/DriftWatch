@@ -185,7 +185,11 @@ markers = [
 [tool.coverage.run]
 source = ["src/driftwatch"]
 branch = true
-omit = ["*/tests/*", "*/__init__.py"]
+omit = [
+    "*/tests/*",
+    "*/__init__.py",
+    "*/integrations/*",  # Optional integrations require external deps
+]
 
 [tool.coverage.report]
 exclude_lines = [
