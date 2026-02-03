@@ -98,8 +98,8 @@ class PSIDetector(BaseDetector):
         self._validate_inputs(reference, production)
 
         psi_value = self._calculate_psi(
-            reference.dropna().values,
-            production.dropna().values,
+            np.asarray(reference.dropna().values),
+            np.asarray(production.dropna().values),
         )
 
         return DetectionResult(
@@ -148,7 +148,7 @@ class PSIDetector(BaseDetector):
         prod_pct = np.clip(prod_pct, eps, 1)
 
         # Calculate PSI
-        psi = np.sum((prod_pct - ref_pct) * np.log(prod_pct / ref_pct))
+        psi: float = float(np.sum((prod_pct - ref_pct) * np.log(prod_pct / ref_pct)))
 
         return float(psi)
 
