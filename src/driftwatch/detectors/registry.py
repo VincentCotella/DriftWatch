@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 
 from driftwatch.detectors.categorical import ChiSquaredDetector
-from driftwatch.detectors.numerical import KSDetector, PSIDetector
+from driftwatch.detectors.numerical import KSDetector, PSIDetector, WassersteinDetector
 
 if TYPE_CHECKING:
     from driftwatch.detectors.base import BaseDetector
@@ -56,6 +56,9 @@ def get_detector_by_name(
     detectors = {
         "ks": lambda: KSDetector(threshold=thresholds.get("ks_pvalue", 0.05)),
         "psi": lambda: PSIDetector(threshold=thresholds.get("psi", 0.2)),
+        "wasserstein": lambda: WassersteinDetector(
+            threshold=thresholds.get("wasserstein", 0.1)
+        ),
         "chi2": lambda: ChiSquaredDetector(
             threshold=thresholds.get("chi2_pvalue", 0.05)
         ),

@@ -4,7 +4,7 @@ import numpy as np
 import pytest
 
 from driftwatch.detectors.categorical import ChiSquaredDetector
-from driftwatch.detectors.numerical import KSDetector, PSIDetector
+from driftwatch.detectors.numerical import KSDetector, PSIDetector, WassersteinDetector
 from driftwatch.detectors.registry import get_detector, get_detector_by_name
 
 
@@ -83,6 +83,15 @@ class TestGetDetectorByName:
         assert isinstance(detector, ChiSquaredDetector)
         assert detector.threshold == 0.1
 
+    def test_get_wasserstein_detector(self) -> None:
+        """Should return Wasserstein detector when requested."""
+        thresholds = {"wasserstein": 0.2}
+
+        detector = get_detector_by_name("wasserstein", thresholds)
+
+        assert isinstance(detector, WassersteinDetector)
+        assert detector.threshold == 0.2
+
     def test_unknown_detector_raises(self) -> None:
         """Should raise ValueError for unknown detector name."""
         with pytest.raises(ValueError, match="Unknown detector 'invalid'"):
@@ -91,9 +100,10 @@ class TestGetDetectorByName:
     def test_error_message_shows_available(self) -> None:
         """Error message should show available detectors."""
         with pytest.raises(ValueError) as exc_info:
-            get_detector_by_name("wasserstein", {})
+            get_detector_by_name("invalid", {})
 
         error_msg = str(exc_info.value)
         assert "ks" in error_msg
         assert "psi" in error_msg
         assert "chi2" in error_msg
+        assert "wasserstein" in error_msg
