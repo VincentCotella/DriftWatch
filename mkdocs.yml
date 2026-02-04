@@ -1,0 +1,134 @@
+site_name: DriftWatch
+site_description: Lightweight ML drift monitoring, built for real-world pipelines
+site_author: DriftWatch Team
+site_url: https://vincentcotella.github.io/DriftWatch
+
+repo_name: VincentCotella/DriftWatch
+repo_url: https://github.com/VincentCotella/DriftWatch
+edit_uri: edit/main/docs/
+
+copyright: Copyright &copy; 2024 DriftWatch
+
+theme:
+  name: material
+  palette:
+    # Light mode
+    - scheme: default
+      primary: white
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    # Dark mode
+    - scheme: slate
+      primary: black
+      accent: cyan
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  extra_css:
+    - stylesheets/extra.css
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+  icon:
+    repo: fontawesome/brands/github
+    logo: material/chart-line-variant
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Installation: getting-started/installation.md
+      - Quickstart: getting-started/quickstart.md
+      - Core Concepts: getting-started/concepts.md
+  - User Guide:
+      - Drift Detectors: user-guide/detectors.md
+      - Monitoring: user-guide/monitoring.md
+      - Reports: user-guide/reports.md
+      - Thresholds: user-guide/thresholds.md
+  - Integrations:
+      - FastAPI: integrations/fastapi.md
+      - CLI: integrations/cli.md
+      - Slack: integrations/slack.md
+      - MLflow: integrations/mlflow.md
+  - Examples:
+      - Basic Usage: examples/basic.md
+      - Production Deployment: examples/production.md
+      - Custom Detectors: examples/custom-detectors.md
+  - API Reference:
+      - Monitor: api/monitor.md
+      - Detectors: api/detectors.md
+      - Reports: api/reports.md
+      - Integrations: api/integrations.md
+  - Contributing: contributing.md
+  - Changelog: changelog.md
+
+plugins:
+  - search:
+      lang: en
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: google
+            show_source: true
+            show_root_heading: true
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            members_order: source
+            inherited_members: false
+            merge_init_into_class: true
+            separate_signature: true
+            show_signature_annotations: true
+            signature_crossrefs: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - tables
+  - footnotes
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/VincentCotella/DriftWatch
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/driftwatch/
+  version:
+    provider: mike
