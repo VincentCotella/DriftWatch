@@ -14,7 +14,7 @@ Basic Usage:
 from driftwatch.core.monitor import Monitor
 from driftwatch.core.report import DriftReport
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __all__ = [
     "DriftReport",
     "Monitor",
