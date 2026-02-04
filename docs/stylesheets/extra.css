@@ -1,0 +1,86 @@
+/* Hero Section Styling */
+.md-content__inner > h1 {
+  display: none; /* Hide default title on homepage */
+}
+
+.hero-section {
+  text-align: center;
+  margin-bottom: 4rem;
+  padding: 2rem 0;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  background: -webkit-linear-gradient(120deg, #4f46e5, #0ea5e9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.2;
+}
+
+.dark-mode .hero-title {
+  background: -webkit-linear-gradient(120deg, #818cf8, #22d3ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  color: var(--md-typeset-color);
+  opacity: 0.7;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  line-height: 1.5;
+}
+
+.hero-badges {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.hero-badges img {
+  height: 20px;
+}
+
+/* Feature Cards */
+.grid.cards {
+  padding-top: 2rem;
+}
+
+/* Custom Primary Color adjustments */
+[data-md-color-primary="white"] .md-header {
+  background-color: #ffffff;
+  color: #000000;
+  box-shadow: 0 0 0.2rem rgba(0,0,0,.1),0 0.2rem 0.4rem rgba(0,0,0,.05);
+}
+
+[data-md-color-primary="white"] .md-tabs {
+  background-color: #f8f9fa;
+  color: #444;
+}
+
+[data-md-color-primary="white"] .md-tabs__link--active, 
+[data-md-color-primary="white"] .md-tabs__link:hover {
+  color: #4f46e5; /* Indigo */
+}
+
+/* Button styling */
+.md-button {
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.md-button--primary {
+  background-color: #4f46e5 !important;
+  border-color: #4f46e5 !important;
+}
+
+.md-button--primary:hover {
+  background-color: #4338ca !important;
+  border-color: #4338ca !important;
+}
