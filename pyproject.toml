@@ -81,7 +81,7 @@ docs = [
 ]
 
 [project.scripts]
-driftwatch = "driftwatch.cli:app"
+driftwatch = "driftwatch.cli.main:app"
 
 [project.urls]
 Homepage = "https://github.com/YOUR_USERNAME/driftwatch"
