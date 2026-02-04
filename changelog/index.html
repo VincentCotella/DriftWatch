@@ -1315,6 +1315,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1331,6 +1349,86 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#020-2024-02-04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [0.2.0] - 2024-02-04
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[0.2.0] - 2024-02-04">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#010-2024-01-28" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [0.1.0] - 2024-01-28
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1356,6 +1454,75 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#020-2024-02-04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [0.2.0] - 2024-02-04
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[0.2.0] - 2024-02-04">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#010-2024-01-28" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [0.1.0] - 2024-01-28
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1375,7 +1542,37 @@
 
 
 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
-<p>See <a href="https://github.com/VincentCotella/DriftWatch/releases">GitHub Releases</a>.</p>
+<p>All notable changes to this project will be documented in this file.</p>
+<p>The format is based on <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>,
+and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
+<h2 id="020-2024-02-04">[0.2.0] - 2024-02-04<a class="headerlink" href="#020-2024-02-04" title="Permanent link">&para;</a></h2>
+<h3 id="added">Added<a class="headerlink" href="#added" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>FastAPI Integration</strong>: Added <code>DriftMiddleware</code> for automatic drift monitoring of API endpoints.</li>
+<li><strong>CLI</strong>: Added <code>driftwatch</code> command-line interface with <code>check</code> and <code>report</code> commands.</li>
+<li><strong>Alerting</strong>: Added <code>SlackAlerter</code> for real-time drift notifications.</li>
+<li><strong>New Detector</strong>: Added <code>WassersteinDetector</code> (Earth Mover's Distance) for more robust drift detection.</li>
+<li><strong>Documentation</strong>: Complete rewrite with MkDocs Material, comprehensive guides, and API reference.</li>
+<li><strong>CI/CD</strong>: Added GitHub Actions workflows for testing, publishing, and documentation deployment.</li>
+</ul>
+<h3 id="changed">Changed<a class="headerlink" href="#changed" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Core</strong>: Improved type hints across the codebase (now 100% typed).</li>
+<li><strong>Core</strong>: Refactored detector registry to separate numerical and categorical detectors.</li>
+<li><strong>Config</strong>: Updated default thresholds for better out-of-the-box performance.</li>
+</ul>
+<h3 id="fixed">Fixed<a class="headerlink" href="#fixed" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Dependencies</strong>: Fixed missing <code>typer</code>, <code>rich</code>, and <code>httpx</code> optional dependencies.</li>
+<li><strong>Tests</strong>: Fixed flakey tests in registry and alerting modules.</li>
+</ul>
+<h2 id="010-2024-01-28">[0.1.0] - 2024-01-28<a class="headerlink" href="#010-2024-01-28" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Initial release.</li>
+<li>Basic <code>Monitor</code> class.</li>
+<li>PSI and KS-Test detectors.</li>
+<li>Simple JSON reporting.</li>
+</ul>
 
 
 
