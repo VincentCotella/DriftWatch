@@ -57,10 +57,12 @@ Released on **2024-02-04**. Available via `pip install driftwatch`.
 
 ## 🚧 In Progress / Next Up
 
-### v0.3.0 — Enhancements
+### v0.3.0 — Enhancements & Explainability
 
 | Task | Priority | Status |
 |------|----------|--------|
+| **Drift Explain** — Detailed stats (mean shift, std change, quantile diffs) | P1 | 🔲 Todo |
+| **Drift Explain** — Visualization (histogram overlay ref vs prod) | P1 | 🔲 Todo |
 | MLflow integration (log drift to experiments) | P2 | 🔲 Todo |
 | Email alerting (SMTP) | P2 | 🔲 Todo |
 | Example Jupyter notebooks | P1 | 🔲 Todo |
