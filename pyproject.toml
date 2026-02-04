@@ -162,6 +162,8 @@ module = [
     "fastapi.*",
     "pandas.*",
     "numpy.*",
+    "typer.*",
+    "rich.*",
 ]
 ignore_missing_imports = true
 
@@ -193,6 +195,7 @@ omit = [
     "*/tests/*",
     "*/__init__.py",
     "*/integrations/*",  # Optional integrations require external deps
+    "*/cli/*",  # Optional CLI interface
 ]
 
 [tool.coverage.report]
