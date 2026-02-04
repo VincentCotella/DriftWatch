@@ -164,6 +164,7 @@ module = [
     "numpy.*",
     "typer.*",
     "rich.*",
+    "httpx.*",
 ]
 ignore_missing_imports = true
 
