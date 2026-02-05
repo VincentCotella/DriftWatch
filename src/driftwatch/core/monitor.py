@@ -65,7 +65,7 @@ class Monitor:
                 thresholds: optional dictionary overriding default drift detection thresholds.
 
         Raises: 
-           ValueError: if reference data is empty.
+            ValueError: if reference data is empty.
         
         """
         self._validate_reference_data(reference_data)
@@ -160,10 +160,10 @@ class Monitor:
         Validate whether production data has required features.
         
         Args:
-           data: production data to validate
+            data: production data to validate
            
         Raises:
-           ValueError: if production data is empty or
+            ValueError: if production data is empty or
                required features are missing in the production data   
         """
         if data.empty:
@@ -178,10 +178,10 @@ class Monitor:
         Add a feature to monitor.
         
         Args:
-           feature: name of feature to add
+            feature: name of feature to add
 
         Raises:
-           ValueError: if required feature is missing in reference data   
+            ValueError: if required feature is missing in reference data   
         """
         if feature in self.features:
             return
@@ -198,7 +198,7 @@ class Monitor:
         Remove a feature from monitoring.
         
         Args:
-           feature: name of feature to remove.
+            feature: name of feature to remove.
         """
         if feature in self.features:
             self.features.remove(feature)
@@ -210,6 +210,6 @@ class Monitor:
         Return list of monitored features.
         
         Returns: 
-          A copy of monitored features name.
+            A copy of monitored features name.
         """
         return self.features.copy()
