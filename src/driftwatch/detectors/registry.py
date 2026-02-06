@@ -28,12 +28,35 @@ def get_detector(dtype: np.dtype[Any], thresholds: dict[str, float]) -> BaseDete
         - Numerical types use PSI by default
         - Categorical/object types use Chi-Squared
     """
-    if np.issubdtype(dtype, np.number):
-        # Use PSI for numerical features by default
-        return PSIDetector(threshold=thresholds.get("psi", 0.2))
-    else:
-        # Use Chi-Squared for categorical features
+    import pandas as pd
+
+    # Handle pandas CategoricalDtype explicitly
+    if isinstance(dtype, pd.CategoricalDtype):
         return ChiSquaredDetector(threshold=thresholds.get("chi2_pvalue", 0.05))
+
+    # Handle pandas StringDtype explicitly
+    if isinstance(dtype, pd.StringDtype):
+        return ChiSquaredDetector(threshold=thresholds.get("chi2_pvalue", 0.05))
+
+    # Handle object dtype (strings, mixed types)
+    if dtype == np.object_ or dtype.name == "object":
+        return ChiSquaredDetector(threshold=thresholds.get("chi2_pvalue", 0.05))
+
+    # Handle string-like dtype names (e.g., 'string', 'String')
+    if hasattr(dtype, "name") and dtype.name.lower().startswith("string"):
+        return ChiSquaredDetector(threshold=thresholds.get("chi2_pvalue", 0.05))
+
+    # Handle numerical types
+    try:
+        if np.issubdtype(dtype, np.number):
+            # Use PSI for numerical features by default
+            return PSIDetector(threshold=thresholds.get("psi", 0.2))
+    except TypeError:
+        # If issubdtype fails, treat as categorical
+        pass
+
+    # Default to categorical for any other type
+    return ChiSquaredDetector(threshold=thresholds.get("chi2_pvalue", 0.05))
 
 
 def get_detector_by_name(
