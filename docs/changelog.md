@@ -5,7 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.2.0] - 2024-02-04
+## [0.3.0] - 2026-02-09
+
+### Added
+
+- **Drift Explain**: New `DriftExplainer` class with detailed statistical analysis:
+  - Mean shift (absolute and percentage)
+  - Standard deviation change
+  - Quantile differences (configurable Q25, Q50, Q75)
+  - Min/Max range changes
+- **Visualization**: New `DriftVisualizer` class for histogram overlays:
+  - `plot_feature()` for single feature visualization
+  - `plot_all()` for multi-feature grid
+  - `save()` for exporting to PNG/PDF/SVG
+- **Optional Dependency**: Added `[viz]` extra for matplotlib support
+- **Documentation**: Added comprehensive Drift Explain guide
+- **Examples**: Added Jupyter notebook tutorial for Google Colab
+
+## [0.2.0] - 2026-02-04
 
 ### Added
 
@@ -27,7 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Dependencies**: Fixed missing `typer`, `rich`, and `httpx` optional dependencies.
 - **Tests**: Fixed flakey tests in registry and alerting modules.
 
-## [0.1.0] - 2024-01-28
+## [0.1.0] - 2026-01-28
 
 - Initial release.
 - Basic `Monitor` class.
