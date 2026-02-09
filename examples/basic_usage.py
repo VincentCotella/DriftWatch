@@ -2,9 +2,9 @@
 Basic usage example for DriftWatch.
 
 This example demonstrates how to:
-1. Initialize a Monitor with reference data
-2. Check production data for drift
-3. Interpret the results
+1. Initialize a Monitor with reference data (training set).
+2. Check production data for potential distribution drift.
+3. Interpret the drift report and metrics (PSI, KS, Chi-Square).
 """
 
 import numpy as np
