@@ -4,9 +4,9 @@
 
 ---
 
-## 📦 Current Version: `v0.2.0` ✅
+## 📦 Previous Version: `v0.2.0` ✅
 
-Released on **2024-02-04**. Available via `pip install driftwatch`.
+Released on **2026-02-04**. Available via `pip install driftwatch`.
 
 ---
 
@@ -55,17 +55,19 @@ Released on **2024-02-04**. Available via `pip install driftwatch`.
 
 ---
 
-## 🚧 In Progress / Next Up
+## ✅ Current Version: `v0.3.0`
+
+Released on **2026-02-09**. Available via `pip install driftwatch[viz]`.
 
 ### v0.3.0 — Enhancements & Explainability
 
 | Task | Priority | Status |
 |------|----------|--------|
-| **Drift Explain** — Detailed stats (mean shift, std change, quantile diffs) | P1 | 🔲 Todo |
-| **Drift Explain** — Visualization (histogram overlay ref vs prod) | P1 | 🔲 Todo |
+| **Drift Explain** — Detailed stats (mean shift, std change, quantile diffs) | P1 | ✅ Done |
+| **Drift Explain** — Visualization (histogram overlay ref vs prod) | P1 | ✅ Done |
+| Example Jupyter notebooks | P1 | ✅ Done |
 | MLflow integration (log drift to experiments) | P2 | 🔲 Todo |
 | Email alerting (SMTP) | P2 | 🔲 Todo |
-| Example Jupyter notebooks | P1 | 🔲 Todo |
 | More detectors (Jensen-Shannon, etc.) | P2 | 🔲 Todo |
 
 ---
@@ -91,7 +93,7 @@ Released on **2024-02-04**. Available via `pip install driftwatch`.
 | Phase 2: Core Engine | ✅ Complete | 100% |
 | Phase 3: Integrations | ✅ Complete | 100% |
 | Phase 4: Docs & Release | ✅ Complete | 100% |
-| Phase 5: Enhancements | 🔲 Not started | 0% |
+| Phase 5: Enhancements (v0.3.0) | ✅ Complete | 50% |
 
 ---
 
@@ -108,4 +110,4 @@ Each feature must satisfy:
 
 ---
 
-*Last updated: 2024-02-04*
+*Last updated: 2026-02-09*
