@@ -69,7 +69,7 @@ nav:
       - Basic Usage: examples/basic.md
       - Production Deployment: examples/production.md
       - Custom Detectors: examples/custom-detectors.md
-      - Jupyter Notebook: https://colab.research.google.com/github/VincentCotella/DriftWatch/blob/main/examples/notebooks/drift_detection_tutorial.ipynb
+      - Jupyter Notebooks: examples/notebooks.md
   - API Reference:
       - Monitor: api/monitor.md
       - Detectors: api/detectors.md
