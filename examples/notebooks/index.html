@@ -12,13 +12,13 @@
         <meta name="author" content="DriftWatch Team">
       
       
-        <link rel="canonical" href="https://vincentcotella.github.io/DriftWatch/user-guide/thresholds/">
+        <link rel="canonical" href="https://vincentcotella.github.io/DriftWatch/examples/notebooks/">
       
       
-        <link rel="prev" href="../reports/">
+        <link rel="prev" href="../custom-detectors/">
       
       
-        <link rel="next" href="../drift-explain/">
+        <link rel="next" href="../../api/monitor/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>Thresholds - DriftWatch</title>
+        <title>Jupyter Notebooks - DriftWatch</title>
       
     
     
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#thresholds" class="md-skip">
+        <a href="#jupyter-notebooks" class="md-skip">
           Skip to content
         </a>
       
@@ -122,7 +122,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Thresholds
+              Jupyter Notebooks
             
           </span>
         </div>
@@ -271,13 +271,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../detectors/" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../user-guide/detectors/" class="md-tabs__link">
           
   
   
@@ -313,11 +311,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../examples/basic/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../basic/" class="md-tabs__link">
           
   
   
@@ -614,31 +614,28 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
             
   
   
@@ -656,7 +653,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -674,7 +671,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../detectors/" class="md-nav__link">
+      <a href="../../user-guide/detectors/" class="md-nav__link">
         
   
   
@@ -702,7 +699,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../monitoring/" class="md-nav__link">
+      <a href="../../user-guide/monitoring/" class="md-nav__link">
         
   
   
@@ -730,7 +727,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reports/" class="md-nav__link">
+      <a href="../../user-guide/reports/" class="md-nav__link">
         
   
   
@@ -755,37 +752,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Thresholds
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../user-guide/thresholds/" class="md-nav__link">
         
   
   
@@ -801,48 +771,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#default-thresholds" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Default Thresholds
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#tuning-guide" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Tuning Guide
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -855,7 +783,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../drift-explain/" class="md-nav__link">
+      <a href="../../user-guide/drift-explain/" class="md-nav__link">
         
   
   
@@ -1060,28 +988,31 @@
       
   
   
+    
   
   
+  
     
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
-        
-          
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
             
   
   
@@ -1099,7 +1030,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1117,7 +1048,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/basic/" class="md-nav__link">
+      <a href="../basic/" class="md-nav__link">
         
   
   
@@ -1145,7 +1076,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/production/" class="md-nav__link">
+      <a href="../production/" class="md-nav__link">
         
   
   
@@ -1173,7 +1104,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/custom-detectors/" class="md-nav__link">
+      <a href="../custom-detectors/" class="md-nav__link">
         
   
   
@@ -1198,10 +1129,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../examples/notebooks/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jupyter Notebooks
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1217,6 +1175,37 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#running-locally" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running Locally
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1483,21 +1472,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#default-thresholds" class="md-nav__link">
+  <a href="#running-locally" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Default Thresholds
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#tuning-guide" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Tuning Guide
+        Running Locally
       
     </span>
   </a>
@@ -1524,17 +1502,37 @@
   
 
 
-<h1 id="thresholds">Thresholds<a class="headerlink" href="#thresholds" title="Permanent link">&para;</a></h1>
-<p>Guide to tuning drift detection thresholds.</p>
-<h2 id="default-thresholds">Default Thresholds<a class="headerlink" href="#default-thresholds" title="Permanent link">&para;</a></h2>
+<h1 id="jupyter-notebooks">📓 Jupyter Notebooks<a class="headerlink" href="#jupyter-notebooks" title="Permanent link">&para;</a></h1>
+<p>Explore DriftWatch through interactive examples. Click the badge to open any notebook directly in Google Colab.</p>
+<div class="grid cards">
 <ul>
-<li>PSI: 0.2</li>
-<li>KS p-value: 0.05</li>
-<li>Chi² p-value: 0.05</li>
-<li>Wasserstein: 0.1</li>
+<li>
+<p><strong>Drift Detection Tutorial</strong></p>
+<hr />
+<p>A complete walkthrough of the core features: detecting drift in numerical and categorical data, and generating reports.</p>
+<p><a class="md-button md-button--primary" href="https://colab.research.google.com/github/VincentCotella/DriftWatch/blob/main/examples/notebooks/drift_detection_tutorial.ipynb"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.941 4.976a7.03 7.03 0 0 0-4.93 2.064 7.033 7.033 0 0 0-.124 9.807l2.395-2.395a3.646 3.646 0 0 1 5.15-5.148l2.397-2.399a7.03 7.03 0 0 0-4.888-1.93m-9.871.01a7.03 7.03 0 0 0-4.888 1.931l2.391 2.391a3.643 3.643 0 0 1 5.023.127l1.734-2.973-.1-.08a7.03 7.03 0 0 0-4.16-1.396m15.01 2.172-2.39 2.39a3.646 3.646 0 0 1-5.15 5.15l-2.406 2.407a7.036 7.036 0 0 0 9.945-9.947m-20.148.01a7.033 7.033 0 0 0-.002 9.681l2.397-2.397a3.643 3.643 0 0 1-.004-4.892zm7.664 7.423a3.635 3.635 0 0 1-5.017.113L2.182 17.1a7.03 7.03 0 0 0 9.007.546l.137-.112z"/></svg></span> Open in Colab</a></p>
+</li>
+<li>
+<p><strong>CLI Tutorial</strong></p>
+<hr />
+<p>Learn how to use the <code>driftwatch</code> command-line interface to check for drift and generate reports without writing Python scripts.</p>
+<p><a class="md-button md-button--primary" href="https://colab.research.google.com/github/VincentCotella/DriftWatch/blob/main/examples/notebooks/cli_tutorial.ipynb"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.941 4.976a7.03 7.03 0 0 0-4.93 2.064 7.033 7.033 0 0 0-.124 9.807l2.395-2.395a3.646 3.646 0 0 1 5.15-5.148l2.397-2.399a7.03 7.03 0 0 0-4.888-1.93m-9.871.01a7.03 7.03 0 0 0-4.888 1.931l2.391 2.391a3.643 3.643 0 0 1 5.023.127l1.734-2.973-.1-.08a7.03 7.03 0 0 0-4.16-1.396m15.01 2.172-2.39 2.39a3.646 3.646 0 0 1-5.15 5.15l-2.406 2.407a7.036 7.036 0 0 0 9.945-9.947m-20.148.01a7.033 7.033 0 0 0-.002 9.681l2.397-2.397a3.643 3.643 0 0 1-.004-4.892zm7.664 7.423a3.635 3.635 0 0 1-5.017.113L2.182 17.1a7.03 7.03 0 0 0 9.007.546l.137-.112z"/></svg></span> Open in Colab</a></p>
+</li>
+<li>
+<p><strong>Advanced Customization</strong></p>
+<hr />
+<p>Deep dive into customizing thresholds, selecting specific detectors, and using the <code>DriftExplainer</code> and <code>DriftVisualizer</code> for detailed analysis.</p>
+<p><a class="md-button md-button--primary" href="https://colab.research.google.com/github/VincentCotella/DriftWatch/blob/main/examples/notebooks/advanced_customization.ipynb"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.941 4.976a7.03 7.03 0 0 0-4.93 2.064 7.033 7.033 0 0 0-.124 9.807l2.395-2.395a3.646 3.646 0 0 1 5.15-5.148l2.397-2.399a7.03 7.03 0 0 0-4.888-1.93m-9.871.01a7.03 7.03 0 0 0-4.888 1.931l2.391 2.391a3.643 3.643 0 0 1 5.023.127l1.734-2.973-.1-.08a7.03 7.03 0 0 0-4.16-1.396m15.01 2.172-2.39 2.39a3.646 3.646 0 0 1-5.15 5.15l-2.406 2.407a7.036 7.036 0 0 0 9.945-9.947m-20.148.01a7.033 7.033 0 0 0-.002 9.681l2.397-2.397a3.643 3.643 0 0 1-.004-4.892zm7.664 7.423a3.635 3.635 0 0 1-5.017.113L2.182 17.1a7.03 7.03 0 0 0 9.007.546l.137-.112z"/></svg></span> Open in Colab</a></p>
+</li>
 </ul>
-<h2 id="tuning-guide">Tuning Guide<a class="headerlink" href="#tuning-guide" title="Permanent link">&para;</a></h2>
-<p>Coming soon.</p>
+</div>
+<h2 id="running-locally">Running Locally<a class="headerlink" href="#running-locally" title="Permanent link">&para;</a></h2>
+<p>To run these notebooks locally, clone the repository and install the dependencies:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/VincentCotella/DriftWatch.git
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">cd</span><span class="w"> </span>DriftWatch
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;.[all]&quot;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>jupyter<span class="w"> </span>notebook<span class="w"> </span>examples/notebooks/
+</span></code></pre></div>
 
 
 
