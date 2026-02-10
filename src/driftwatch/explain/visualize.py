@@ -45,6 +45,7 @@ class DriftVisualizer:
         production_data: pd.DataFrame,
         report: DriftReport,
         style: str = "seaborn-v0_8-whitegrid",
+        colors: dict[str, str] | None = None,
     ) -> None:
         """
         Initialize the DriftVisualizer.
@@ -54,19 +55,22 @@ class DriftVisualizer:
             production_data: Production DataFrame
             report: DriftReport from Monitor.check()
             style: Matplotlib style to use (default: seaborn-v0_8-whitegrid)
+            colors: Custom color scheme override
         """
         self.reference_data = reference_data
         self.production_data = production_data
         self.report = report
         self.style = style
 
-        # Color scheme
+        # Default color scheme
         self.colors = {
             "reference": "#3498db",  # Blue
             "production": "#e74c3c",  # Red
             "ok": "#27ae60",  # Green
             "drift": "#e74c3c",  # Red
         }
+        if colors:
+            self.colors.update(colors)
 
     def plot_feature(
         self,
@@ -75,6 +79,12 @@ class DriftVisualizer:
         figsize: tuple[int, int] = (10, 6),
         show_stats: bool = True,
         alpha: float = 0.6,
+        colors: dict[str, str] | None = None,
+        title: str | None = None,
+        xlabel: str | None = None,
+        ylabel: str | None = None,
+        hist_kwargs: dict[str, Any] | None = None,
+        stats_kwargs: dict[str, Any] | None = None,
     ) -> Any:
         """
         Plot histogram overlay for a single feature.
@@ -85,6 +95,12 @@ class DriftVisualizer:
             figsize: Figure size (width, height)
             show_stats: Whether to show statistical annotations
             alpha: Transparency of histograms
+            colors: Custom colors for this plot (keys: reference, production)
+            title: Custom title override
+            xlabel: Custom x-axis label
+            ylabel: Custom y-axis label
+            hist_kwargs: Additional arguments passed to ax.hist
+            stats_kwargs: Additional arguments passed to the stats text box
 
         Returns:
             matplotlib Figure object
@@ -125,6 +141,11 @@ class DriftVisualizer:
         drift_score = feature_result.score if feature_result else 0.0
         drift_method = feature_result.method if feature_result else "unknown"
 
+        # Apply custom colors if provided
+        plot_colors = self.colors.copy()
+        if colors:
+            plot_colors.update(colors)
+
         # Create figure
         with contextlib.suppress(OSError):
             plt.style.use(self.style)
@@ -135,16 +156,23 @@ class DriftVisualizer:
         all_data = np.concatenate([ref_data.values, prod_data.values])
         bin_edges = np.histogram_bin_edges(all_data, bins=bins)
 
+        # Prepare hist kwargs
+        default_hist_kwargs = {
+            "density": True,
+            "edgecolor": "white",
+            "linewidth": 0.5,
+        }
+        if hist_kwargs:
+            default_hist_kwargs.update(hist_kwargs)
+
         # Plot histograms
         ax.hist(
             ref_data,
             bins=bin_edges,
             alpha=alpha,
             label=f"Reference (n={len(ref_data):,})",
-            color=self.colors["reference"],
-            density=True,
-            edgecolor="white",
-            linewidth=0.5,
+            color=plot_colors["reference"],
+            **default_hist_kwargs,
         )
 
         ax.hist(
@@ -152,10 +180,8 @@ class DriftVisualizer:
             bins=bin_edges,
             alpha=alpha,
             label=f"Production (n={len(prod_data):,})",
-            color=self.colors["production"],
-            density=True,
-            edgecolor="white",
-            linewidth=0.5,
+            color=plot_colors["production"],
+            **default_hist_kwargs,
         )
 
         # Add vertical lines for means
@@ -164,32 +190,37 @@ class DriftVisualizer:
 
         ax.axvline(
             ref_mean,
-            color=self.colors["reference"],
+            color=plot_colors["reference"],
             linestyle="--",
             linewidth=2,
             label=f"Ref mean: {ref_mean:.2f}",
         )
         ax.axvline(
             prod_mean,
-            color=self.colors["production"],
+            color=plot_colors["production"],
             linestyle="--",
             linewidth=2,
             label=f"Prod mean: {prod_mean:.2f}",
         )
 
         # Title with drift status
-        status_emoji = "🔴" if has_drift else "✅"
-        status_text = "DRIFT DETECTED" if has_drift else "NO DRIFT"
+        if title is None:
+            status_emoji = "🔴" if has_drift else "✅"
+            status_text = "DRIFT DETECTED" if has_drift else "NO DRIFT"
+            title = (
+                f"{status_emoji} {feature_name}: {status_text}\n"
+                f"Score ({drift_method}): {drift_score:.4f}"
+            )
+
         ax.set_title(
-            f"{status_emoji} {feature_name}: {status_text}\n"
-            f"Score ({drift_method}): {drift_score:.4f}",
+            title,
             fontsize=14,
             fontweight="bold",
         )
 
         # Labels
-        ax.set_xlabel(feature_name, fontsize=12)
-        ax.set_ylabel("Density", fontsize=12)
+        ax.set_xlabel(xlabel or feature_name, fontsize=12)
+        ax.set_ylabel(ylabel or "Density", fontsize=12)
 
         # Legend
         ax.legend(loc="upper right", fontsize=10)
@@ -209,16 +240,24 @@ class DriftVisualizer:
 
             # Position the text box
             props = {"boxstyle": "round,pad=0.5", "facecolor": "wheat", "alpha": 0.8}
-            ax.text(
-                0.02,
-                0.98,
-                stats_text,
-                transform=ax.transAxes,
-                fontsize=10,
-                verticalalignment="top",
-                bbox=props,
-                family="monospace",
-            )
+            # Custom stats kwargs
+            stats_defaults = {
+                "x": 0.02,
+                "y": 0.98,
+                "transform": ax.transAxes,
+                "fontsize": 10,
+                "verticalalignment": "top",
+                "bbox": props,
+                "family": "monospace",
+            }
+            if stats_kwargs:
+                stats_defaults.update(stats_kwargs)
+
+            # Remove x/y/s from defaults if present to avoid multiple values
+            x_pos = stats_defaults.pop("x")
+            y_pos = stats_defaults.pop("y")
+
+            ax.text(x_pos, y_pos, stats_text, **stats_defaults)
 
         plt.tight_layout()
         return fig
@@ -229,6 +268,8 @@ class DriftVisualizer:
         figsize: tuple[int, int] | None = None,
         bins: int = 50,
         alpha: float = 0.6,
+        colors: dict[str, str] | None = None,
+        hist_kwargs: dict[str, Any] | None = None,
     ) -> Any:
         """
         Plot histogram overlays for all numeric features.
@@ -238,6 +279,8 @@ class DriftVisualizer:
             figsize: Figure size (auto-calculated if None)
             bins: Number of histogram bins
             alpha: Transparency of histograms
+            colors: Custom colors for this plot (keys: reference, production)
+            hist_kwargs: Additional arguments passed to ax.hist
 
         Returns:
             matplotlib Figure object
@@ -269,6 +312,11 @@ class DriftVisualizer:
         if figsize is None:
             figsize = (6 * cols, 4 * rows)
 
+        # Apply custom colors if provided
+        plot_colors = self.colors.copy()
+        if colors:
+            plot_colors.update(colors)
+
         fig, axes = plt.subplots(rows, cols, figsize=figsize)
         axes = axes.flatten() if n_features > 1 else [axes]
 
@@ -279,6 +327,8 @@ class DriftVisualizer:
                 feature_name=feature_name,
                 bins=bins,
                 alpha=alpha,
+                colors=plot_colors,
+                hist_kwargs=hist_kwargs,
             )
 
         # Hide unused subplots
@@ -300,6 +350,8 @@ class DriftVisualizer:
         feature_name: str,
         bins: int,
         alpha: float,
+        colors: dict[str, str],
+        hist_kwargs: dict[str, Any] | None = None,
     ) -> None:
         """Plot a single feature on the given axes."""
         import numpy as np
@@ -315,16 +367,23 @@ class DriftVisualizer:
         all_data = np.concatenate([ref_data.values, prod_data.values])
         bin_edges = np.histogram_bin_edges(all_data, bins=bins)
 
+        # Prepare hist kwargs
+        default_hist_kwargs = {
+            "density": True,
+            "edgecolor": "white",
+            "linewidth": 0.5,
+        }
+        if hist_kwargs:
+            default_hist_kwargs.update(hist_kwargs)
+
         # Plot histograms
         ax.hist(
             ref_data,
             bins=bin_edges,
             alpha=alpha,
             label="Reference",
-            color=self.colors["reference"],
-            density=True,
-            edgecolor="white",
-            linewidth=0.5,
+            color=colors["reference"],
+            **default_hist_kwargs,
         )
 
         ax.hist(
@@ -332,10 +391,8 @@ class DriftVisualizer:
             bins=bin_edges,
             alpha=alpha,
             label="Production",
-            color=self.colors["production"],
-            density=True,
-            edgecolor="white",
-            linewidth=0.5,
+            color=colors["production"],
+            **default_hist_kwargs,
         )
 
         # Title
