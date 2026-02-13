@@ -88,38 +88,38 @@ class DriftReport:
     def has_drift(self) -> bool:
         """
         Check if any feature has drift.
-        
+
         Returns:
             True if at least one feature has drift, otherwise False
         Example:
             >>> report.has_drift()
-            False  
+            False
         """
         return any(r.has_drift for r in self.feature_results)
 
     def drifted_features(self) -> list[str]:
         """
         Return list of features with detected drift.
-        
+
         Returns:
             list of feature name with drift.
-        
+
         Example:
             >>> report.drifted_features()
-            ["age", "income"]      
+            ["age", "income"]
         """
         return [r.feature_name for r in self.feature_results if r.has_drift]
 
     def drift_ratio(self) -> float:
         """
         Return ratio of drifted features to total features.
-        
+
         Returns:
             ratio (fraction) of detected drift features with total features.
 
         Example:
             >>> report.drift_ratio()
-            0.25  
+            0.25
         """
         if not self.feature_results:
             return 0.0
@@ -157,17 +157,17 @@ class DriftReport:
     def feature_drift(self, feature_name: str) -> FeatureDriftResult | None:
         """
         Get drift result for a specific feature.
-        
+
         Args:
           feature_name: name of the feature to get drift result.
-        
-        Returns: 
+
+        Returns:
             FeatureDriftResult if the feature exists otherwise None.
 
         Example:
             >>> result=report.feature_drift("age")
             >>> result.has_drift
-            True  
+            True
         """
         for result in self.feature_results:
             if result.feature_name == feature_name:
@@ -183,7 +183,7 @@ class DriftReport:
 
         Example:
             >>> print(report.summary())
-            DRIFT REPORT    
+            DRIFT REPORT
         """
         lines = [
             "=" * 50,
@@ -216,13 +216,13 @@ class DriftReport:
     def to_dict(self) -> dict[str, Any]:
         """
         Convert report to dictionary.
-        
+
         Returns:
             Dictionary representation of the drift report.
 
         Example:
             >>> report.to_dict()["status"]
-            'OK'   
+            'OK'
         """
         return {
             "status": self.status.value,
@@ -239,17 +239,17 @@ class DriftReport:
     def to_json(self, indent: int = 2) -> str:
         """
         Convert report to JSON string.
-        
+
         Args:
             indent: number of spaces used for JSON indentation.
 
         Returns:
-            JSON-formatted string.  
+            JSON-formatted string.
 
         Example:
             >>> json_str = report.to_json()
             >>> '"status"' in json_str
-            True    
+            True
 
         """
         return json.dumps(self.to_dict(), indent=indent, default=str)
