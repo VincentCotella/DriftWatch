@@ -54,6 +54,20 @@ class Monitor:
         model: Any | None = None,
         thresholds: dict[str, float] | None = None,
     ) -> None:
+        """
+        Initialize the monitor with reference data and configuration
+
+        Args:
+           reference_data : acts as reference dataframe used as baseline for drift detection.
+           features : List of feature columns to monitor.
+                If None, all columns are monitored.
+           model: Optional machine learning model
+                thresholds: optional dictionary overriding default drift detection thresholds.
+
+        Raises:
+            ValueError: if reference data is empty.
+
+        """
         self._validate_reference_data(reference_data)
 
         self.reference_data = reference_data
@@ -65,12 +79,29 @@ class Monitor:
         self._setup_detectors()
 
     def _validate_reference_data(self, data: pd.DataFrame) -> None:
-        """Validate reference data is not empty."""
+        """
+        Validate reference data is not empty.
+
+        Args:
+            data: referenced dataframe to validate
+
+        Raises:
+            ValueError: if reference data is empty.
+        """
+
         if data.empty:
             raise ValueError("Reference data cannot be empty")
 
     def _setup_detectors(self) -> None:
-        """Initialize detectors for each feature based on dtype."""
+        """
+        Initialize detectors for each feature based on dtype.
+
+        Detectors are selected based on the data type of each feature
+        and configured using provided threshold values.
+
+        Raises:
+            ValueError: if a feature in not present in reference dataset.
+        """
         for feature in self.features:
             if feature not in self.reference_data.columns:
                 raise ValueError(f"Feature '{feature}' not found in reference data")
@@ -83,6 +114,9 @@ class Monitor:
         """
         Check for drift between reference and production data.
 
+        Each monitored feature in prodution dataset is compared against
+        reference dataset using appropriate detectors.
+
         Args:
             production_data: Production DataFrame to compare
 
@@ -92,6 +126,7 @@ class Monitor:
         Raises:
             ValueError: If production data is empty or missing features
         """
+
         self._validate_production_data(production_data)
 
         feature_results: list[FeatureDriftResult] = []
@@ -121,7 +156,16 @@ class Monitor:
         )
 
     def _validate_production_data(self, data: pd.DataFrame) -> None:
-        """Validate production data has required features."""
+        """
+        Validate whether production data has required features.
+
+        Args:
+            data: production data to validate
+
+        Raises:
+            ValueError: if production data is empty or
+               required features are missing in the production data
+        """
         if data.empty:
             raise ValueError("Production data cannot be empty")
 
@@ -130,7 +174,15 @@ class Monitor:
             raise ValueError(f"Missing features in production data: {missing}")
 
     def add_feature(self, feature: str) -> None:
-        """Add a feature to monitor."""
+        """
+        Add a feature to monitor.
+
+        Args:
+            feature: name of feature to add
+
+        Raises:
+            ValueError: if required feature is missing in reference data
+        """
         if feature in self.features:
             return
 
@@ -142,12 +194,22 @@ class Monitor:
         self._detectors[feature] = get_detector(dtype, self.thresholds)
 
     def remove_feature(self, feature: str) -> None:
-        """Remove a feature from monitoring."""
+        """
+        Remove a feature from monitoring.
+
+        Args:
+            feature: name of feature to remove.
+        """
         if feature in self.features:
             self.features.remove(feature)
             del self._detectors[feature]
 
     @property
     def monitored_features(self) -> list[str]:
-        """Return list of monitored features."""
+        """
+        Return list of monitored features.
+
+        Returns:
+            A copy of monitored features name.
+        """
         return self.features.copy()
