@@ -12,6 +12,19 @@ from enum import Enum
 from typing import Any
 
 
+class DriftType(str, Enum):
+    """Types of drift that can be detected.
+
+    - FEATURE: Input data distribution shift (P(X) changes)
+    - PREDICTION: Model output distribution shift (P(Y_hat) changes)
+    - CONCEPT: Input-output relationship shift (P(Y|X) changes)
+    """
+
+    FEATURE = "FEATURE"
+    PREDICTION = "PREDICTION"
+    CONCEPT = "CONCEPT"
+
+
 class DriftStatus(str, Enum):
     """Overall drift status levels."""
 
@@ -51,6 +64,7 @@ class FeatureDriftResult:
     method: str
     threshold: float
     p_value: float | None = None
+    drift_type: DriftType = DriftType.FEATURE
 
     def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary."""
@@ -61,6 +75,7 @@ class FeatureDriftResult:
             "method": self.method,
             "threshold": self.threshold,
             "p_value": self.p_value,
+            "drift_type": self.drift_type.value,
         }
 
 
@@ -260,3 +275,168 @@ class DriftReport:
             f"features={len(self.feature_results)}, "
             f"drifted={len(self.drifted_features())})"
         )
+
+
+@dataclass
+class ComprehensiveDriftReport:
+    """Comprehensive drift report combining feature, prediction, and concept drift.
+
+    Provides a unified view of all drift types with clear separation
+    between each type for easy analysis and alerting.
+
+    Attributes:
+        feature_report: DriftReport from feature drift analysis
+        prediction_report: Optional DriftReport from prediction drift analysis
+        concept_report: Optional DriftReport from concept drift analysis
+        model_version: Optional model version identifier
+    """
+
+    feature_report: DriftReport | None = None
+    prediction_report: DriftReport | None = None
+    concept_report: DriftReport | None = None
+    model_version: str | None = None
+    timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+
+    def has_drift(self) -> bool:
+        """Check if any type of drift was detected."""
+        reports = [self.feature_report, self.prediction_report, self.concept_report]
+        return any(r.has_drift() for r in reports if r is not None)
+
+    def drift_types_detected(self) -> list[DriftType]:
+        """Return list of drift types that were detected."""
+        detected: list[DriftType] = []
+        if self.feature_report and self.feature_report.has_drift():
+            detected.append(DriftType.FEATURE)
+        if self.prediction_report and self.prediction_report.has_drift():
+            detected.append(DriftType.PREDICTION)
+        if self.concept_report and self.concept_report.has_drift():
+            detected.append(DriftType.CONCEPT)
+        return detected
+
+    @property
+    def status(self) -> DriftStatus:
+        """Determine overall drift status across all drift types.
+
+        Returns the worst status across all reports.
+        CONCEPT drift is weighted most heavily.
+        """
+        statuses: list[DriftStatus] = []
+        for report in [
+            self.feature_report,
+            self.prediction_report,
+            self.concept_report,
+        ]:
+            if report is not None:
+                statuses.append(report.status)
+
+        if not statuses:
+            return DriftStatus.OK
+
+        if DriftStatus.CRITICAL in statuses:
+            return DriftStatus.CRITICAL
+        if DriftStatus.WARNING in statuses:
+            return DriftStatus.WARNING
+        return DriftStatus.OK
+
+    def summary(self) -> str:
+        """Generate a comprehensive summary of all drift types."""
+        lines = [
+            "=" * 60,
+            "COMPREHENSIVE DRIFT REPORT",
+            "=" * 60,
+            f"Overall Status: {self.status.value}",
+            f"Timestamp: {self.timestamp.isoformat()}",
+            f"Drift Types Detected: {', '.join(d.value for d in self.drift_types_detected()) or 'None'}",
+        ]
+
+        if self.model_version:
+            lines.append(f"Model Version: {self.model_version}")
+
+        lines.append("")
+
+        # Feature Drift Section
+        lines.append("-" * 60)
+        lines.append("📊 FEATURE DRIFT (Data Distribution)")
+        lines.append("-" * 60)
+        if self.feature_report:
+            lines.append(f"  Status: {self.feature_report.status.value}")
+            lines.append(f"  Drift Ratio: {self.feature_report.drift_ratio():.1%}")
+            lines.append(
+                f"  Affected: {len(self.feature_report.drifted_features())}"
+                f"/{len(self.feature_report.feature_results)} features"
+            )
+            if self.feature_report.drifted_features():
+                for r in self.feature_report.feature_results:
+                    if r.has_drift:
+                        lines.append(
+                            f"    ⚠ {r.feature_name}: {r.method}={r.score:.4f}"
+                        )
+        else:
+            lines.append("  Not analyzed")
+
+        lines.append("")
+
+        # Prediction Drift Section
+        lines.append("-" * 60)
+        lines.append("🎯 PREDICTION DRIFT (Model Output Distribution)")
+        lines.append("-" * 60)
+        if self.prediction_report:
+            lines.append(f"  Status: {self.prediction_report.status.value}")
+            lines.append(f"  Drift Ratio: {self.prediction_report.drift_ratio():.1%}")
+            if self.prediction_report.drifted_features():
+                for r in self.prediction_report.feature_results:
+                    if r.has_drift:
+                        lines.append(
+                            f"    ⚠ {r.feature_name}: {r.method}={r.score:.4f}"
+                        )
+        else:
+            lines.append("  Not analyzed")
+
+        lines.append("")
+
+        # Concept Drift Section
+        lines.append("-" * 60)
+        lines.append("🧠 CONCEPT DRIFT (Model Performance Degradation)")
+        lines.append("-" * 60)
+        if self.concept_report:
+            lines.append(f"  Status: {self.concept_report.status.value}")
+            lines.append(f"  Drift Ratio: {self.concept_report.drift_ratio():.1%}")
+            if self.concept_report.drifted_features():
+                for r in self.concept_report.feature_results:
+                    if r.has_drift:
+                        lines.append(
+                            f"    ⚠ {r.feature_name}: {r.method}={r.score:.4f}"
+                        )
+        else:
+            lines.append("  Not analyzed (requires ground truth labels)")
+
+        lines.append("")
+        lines.append("=" * 60)
+        return "\n".join(lines)
+
+    def to_dict(self) -> dict[str, Any]:
+        """Convert comprehensive report to dictionary."""
+        return {
+            "status": self.status.value,
+            "timestamp": self.timestamp.isoformat(),
+            "model_version": self.model_version,
+            "has_drift": self.has_drift(),
+            "drift_types_detected": [d.value for d in self.drift_types_detected()],
+            "feature_drift": self.feature_report.to_dict()
+            if self.feature_report
+            else None,
+            "prediction_drift": self.prediction_report.to_dict()
+            if self.prediction_report
+            else None,
+            "concept_drift": self.concept_report.to_dict()
+            if self.concept_report
+            else None,
+        }
+
+    def to_json(self, indent: int = 2) -> str:
+        """Convert comprehensive report to JSON string."""
+        return json.dumps(self.to_dict(), indent=indent, default=str)
+
+    def __repr__(self) -> str:
+        types = ", ".join(d.value for d in self.drift_types_detected()) or "none"
+        return f"ComprehensiveDriftReport(status={self.status.value}, drift_types=[{types}])"
