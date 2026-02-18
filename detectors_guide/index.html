@@ -950,6 +950,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../integrations/email/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Email
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../integrations/mlflow/" class="md-nav__link">
         
   
@@ -1449,6 +1477,39 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#jensen-shannon-divergence-new-in-v030" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Jensen-Shannon Divergence (New in v0.3.0)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anderson-darling-test-new-in-v030" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anderson-Darling Test (New in v0.3.0)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cramer-von-mises-test-new-in-v030" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cramér-von Mises Test (New in v0.3.0)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1562,10 +1623,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#when-to-use-wasserstein" class="md-nav__link">
+  <a href="#when-to-use-each-new-detector" class="md-nav__link">
     <span class="md-ellipsis">
       
-        When to Use Wasserstein
+        When to Use Each New Detector
       
     </span>
   </a>
@@ -1663,6 +1724,76 @@
 - More sensitive to gradual shifts
 - Continuous metric (no binning artifacts)
 - Better for multimodal distributions</p>
+<h3 id="jensen-shannon-divergence-new-in-v030">Jensen-Shannon Divergence <em>(New in v0.3.0)</em><a class="headerlink" href="#jensen-shannon-divergence-new-in-v030" title="Permanent link">&para;</a></h3>
+<p><strong>Best for</strong>: Symmetric, bounded measure of distribution similarity</p>
+<ul>
+<li><strong>How it works</strong>: Computes the average KL divergence of each distribution to the mixture</li>
+<li><strong>Threshold</strong>: Typically 0.05-0.2 (range: 0 to 1 with base-2)</li>
+<li><strong>Interpretation</strong>:</li>
+<li>JSD = 0: Identical distributions</li>
+<li>JSD = 1: Maximally different distributions</li>
+<li>JSD ≥ threshold: Drift detected</li>
+</ul>
+<p><strong>Use when</strong>:
+- You need a symmetric measure (JSD(P||Q) = JSD(Q||P))
+- You want a bounded score that's easy to interpret (0-1)
+- You need a more robust alternative to KL divergence
+- You're comparing distributions that may have non-overlapping support</p>
+<p><strong>Advantages over PSI/KS</strong>:
+- Always finite (unlike KL divergence)
+- Symmetric by design
+- Bounded range makes thresholds more intuitive
+- Robust to zero-probability bins</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">driftwatch.detectors.numerical</span><span class="w"> </span><span class="kn">import</span> <span class="n">JensenShannonDetector</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">detector</span> <span class="o">=</span> <span class="n">JensenShannonDetector</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">buckets</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">result</span> <span class="o">=</span> <span class="n">detector</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">reference_series</span><span class="p">,</span> <span class="n">production_series</span><span class="p">)</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;JSD: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> (0=identical, 1=maximally different)&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="anderson-darling-test-new-in-v030">Anderson-Darling Test <em>(New in v0.3.0)</em><a class="headerlink" href="#anderson-darling-test-new-in-v030" title="Permanent link">&para;</a></h3>
+<p><strong>Best for</strong>: Detecting differences in distribution tails</p>
+<ul>
+<li><strong>How it works</strong>: A modified KS test that weights the tails more heavily</li>
+<li><strong>Threshold</strong>: P-value (typically 0.05)</li>
+<li><strong>Interpretation</strong>: P-value &lt; threshold indicates drift</li>
+</ul>
+<p><strong>Use when</strong>:
+- Tail behavior matters (e.g., extreme values, outliers)
+- You're monitoring risk-sensitive features (credit scores, fraud signals)
+- You need more power than the KS test for tail differences
+- You care about the full distribution shape, especially extremes</p>
+<p><strong>Advantages over KS test</strong>:
+- More sensitive to tail differences
+- Better at detecting changes in extreme values
+- More powerful for detecting subtle distributional changes</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">driftwatch.detectors.numerical</span><span class="w"> </span><span class="kn">import</span> <span class="n">AndersonDarlingDetector</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">detector</span> <span class="o">=</span> <span class="n">AndersonDarlingDetector</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">result</span> <span class="o">=</span> <span class="n">detector</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">reference_series</span><span class="p">,</span> <span class="n">production_series</span><span class="p">)</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;AD stat: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, p-value: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">p_value</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="cramer-von-mises-test-new-in-v030">Cramér-von Mises Test <em>(New in v0.3.0)</em><a class="headerlink" href="#cramer-von-mises-test-new-in-v030" title="Permanent link">&para;</a></h3>
+<p><strong>Best for</strong>: Detecting overall distributional changes</p>
+<ul>
+<li><strong>How it works</strong>: Integrates squared differences between CDFs (vs. KS which uses max)</li>
+<li><strong>Threshold</strong>: P-value (typically 0.05)</li>
+<li><strong>Interpretation</strong>: P-value &lt; threshold indicates drift</li>
+</ul>
+<p><strong>Use when</strong>:
+- You want sensitivity to the entire distribution shape
+- You need a complementary test to KS (more sensitive to overall shifts)
+- Your distributions may differ across the full range, not just at one point
+- You're running multi-test drift detection pipelines</p>
+<p><strong>Advantages over KS test</strong>:
+- Considers the entire distribution, not just the maximum difference
+- More sensitive to uniform distributional changes
+- Better power for detecting diffuse differences</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">driftwatch.detectors.numerical</span><span class="w"> </span><span class="kn">import</span> <span class="n">CramerVonMisesDetector</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">detector</span> <span class="o">=</span> <span class="n">CramerVonMisesDetector</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">result</span> <span class="o">=</span> <span class="n">detector</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">reference_series</span><span class="p">,</span> <span class="n">production_series</span><span class="p">)</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CvM stat: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, p-value: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">p_value</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></code></pre></div>
 <h2 id="categorical-features">Categorical Features<a class="headerlink" href="#categorical-features" title="Permanent link">&para;</a></h2>
 <h3 id="chi-squared-test">Chi-Squared Test<a class="headerlink" href="#chi-squared-test" title="Permanent link">&para;</a></h3>
 <p><strong>Best for</strong>: Categorical drift detection</p>
@@ -1677,12 +1808,15 @@
 - Sample size is adequate (expected count &gt; 5 per category)</p>
 <h2 id="choosing-between-detectors">Choosing Between Detectors<a class="headerlink" href="#choosing-between-detectors" title="Permanent link">&para;</a></h2>
 <h3 id="quick-decision-tree">Quick Decision Tree<a class="headerlink" href="#quick-decision-tree" title="Permanent link">&para;</a></h3>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Is your feature numerical?
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├─ Yes → Choose based on sensitivity needs:
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│   ├─ Standard monitoring → PSI (threshold=0.2)
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│   ├─ Need p-values → KS (threshold=0.05)
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│   └─ High sensitivity needed → Wasserstein (threshold=0.1)
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>└─ No (categorical) → Chi-Squared (threshold=0.05)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Is your feature numerical?
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>├─ Yes → Choose based on sensitivity needs:
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>│   ├─ Standard monitoring → PSI (threshold=0.2)
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>│   ├─ Need p-values → KS (threshold=0.05)
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>│   ├─ High sensitivity needed → Wasserstein (threshold=0.1)
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>│   ├─ Bounded 0-1 score → Jensen-Shannon (threshold=0.1)
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>│   ├─ Tail-sensitive → Anderson-Darling (threshold=0.05)
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>│   └─ Overall shape → Cramér-von Mises (threshold=0.05)
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>└─ No (categorical) → Chi-Squared (threshold=0.05)
 </span></code></pre></div>
 <h3 id="comparison-table">Comparison Table<a class="headerlink" href="#comparison-table" title="Permanent link">&para;</a></h3>
 <table>
@@ -1722,6 +1856,30 @@
 <td>Subtle shifts</td>
 </tr>
 <tr>
+<td>Jensen-Shannon</td>
+<td>Numerical</td>
+<td>Medium-High</td>
+<td>High</td>
+<td>Fast</td>
+<td>Bounded comparison</td>
+</tr>
+<tr>
+<td>Anderson-Darling</td>
+<td>Numerical</td>
+<td>High (tails)</td>
+<td>Medium</td>
+<td>Fast</td>
+<td>Tail differences</td>
+</tr>
+<tr>
+<td>Cramér-von Mises</td>
+<td>Numerical</td>
+<td>High (overall)</td>
+<td>Medium</td>
+<td>Fast</td>
+<td>Full distribution</td>
+</tr>
+<tr>
 <td>Chi²</td>
 <td>Categorical</td>
 <td>Medium</td>
@@ -1733,36 +1891,54 @@
 </table>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
 <h3 id="using-different-detectors">Using Different Detectors<a class="headerlink" href="#using-different-detectors" title="Permanent link">&para;</a></h3>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">driftwatch</span><span class="w"> </span><span class="kn">import</span> <span class="n">Monitor</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># Default (PSI for numerical, Chi² for categorical)</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">monitor</span> <span class="o">=</span> <span class="n">Monitor</span><span class="p">(</span><span class="n">reference_data</span><span class="o">=</span><span class="n">train_df</span><span class="p">)</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1"># Explicit detector per feature</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">monitor</span> <span class="o">=</span> <span class="n">Monitor</span><span class="p">(</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="n">reference_data</span><span class="o">=</span><span class="n">train_df</span><span class="p">,</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="n">thresholds</span><span class="o">=</span><span class="p">{</span>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>        <span class="s2">&quot;psi&quot;</span><span class="p">:</span> <span class="mf">0.15</span><span class="p">,</span>
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>        <span class="s2">&quot;wasserstein&quot;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>        <span class="s2">&quot;ks_pvalue&quot;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span>
-</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    <span class="p">}</span>
-</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="p">)</span>
-</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
-</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="c1"># Using registry to get specific detector</span>
-</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="kn">from</span><span class="w"> </span><span class="nn">driftwatch.detectors.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_detector_by_name</span>
-</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
-</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="n">wasserstein</span> <span class="o">=</span> <span class="n">get_detector_by_name</span><span class="p">(</span>
-</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>    <span class="s2">&quot;wasserstein&quot;</span><span class="p">,</span> 
-</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>    <span class="n">thresholds</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;wasserstein&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">}</span>
-</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="p">)</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">driftwatch</span><span class="w"> </span><span class="kn">import</span> <span class="n">Monitor</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># Default (PSI for numerical, Chi² for categorical)</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">monitor</span> <span class="o">=</span> <span class="n">Monitor</span><span class="p">(</span><span class="n">reference_data</span><span class="o">=</span><span class="n">train_df</span><span class="p">)</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1"># Explicit detector per feature</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="n">monitor</span> <span class="o">=</span> <span class="n">Monitor</span><span class="p">(</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    <span class="n">reference_data</span><span class="o">=</span><span class="n">train_df</span><span class="p">,</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>    <span class="n">thresholds</span><span class="o">=</span><span class="p">{</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>        <span class="s2">&quot;psi&quot;</span><span class="p">:</span> <span class="mf">0.15</span><span class="p">,</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>        <span class="s2">&quot;wasserstein&quot;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>        <span class="s2">&quot;ks_pvalue&quot;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>        <span class="s2">&quot;jensen_shannon&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>    <span class="p">}</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="p">)</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="c1"># Using registry to get specific detector</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="kn">from</span><span class="w"> </span><span class="nn">driftwatch.detectors.registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_detector_by_name</span>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="n">jsd</span> <span class="o">=</span> <span class="n">get_detector_by_name</span><span class="p">(</span>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>    <span class="s2">&quot;jensen_shannon&quot;</span><span class="p">,</span>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>    <span class="n">thresholds</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;jensen_shannon&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">}</span>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="p">)</span>
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>
+</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="n">ad</span> <span class="o">=</span> <span class="n">get_detector_by_name</span><span class="p">(</span>
+</span><span id="__span-4-26"><a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>    <span class="s2">&quot;anderson_darling&quot;</span><span class="p">,</span>
+</span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>    <span class="n">thresholds</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;anderson_darling_pvalue&quot;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">}</span>
+</span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="p">)</span>
+</span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>
+</span><span id="__span-4-30"><a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="n">cvm</span> <span class="o">=</span> <span class="n">get_detector_by_name</span><span class="p">(</span>
+</span><span id="__span-4-31"><a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>    <span class="s2">&quot;cramer_von_mises&quot;</span><span class="p">,</span>
+</span><span id="__span-4-32"><a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a>    <span class="n">thresholds</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;cramer_von_mises_pvalue&quot;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">}</span>
+</span><span id="__span-4-33"><a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="p">)</span>
 </span></code></pre></div>
 <h2 id="advanced-tips">Advanced Tips<a class="headerlink" href="#advanced-tips" title="Permanent link">&para;</a></h2>
-<h3 id="when-to-use-wasserstein">When to Use Wasserstein<a class="headerlink" href="#when-to-use-wasserstein" title="Permanent link">&para;</a></h3>
-<p>Wasserstein is particularly useful for:
-- <strong>Time series features</strong>: Detect gradual temporal changes
-- <strong>High-stakes predictions</strong>: Early warning for critical models
-- <strong>Multimodal distributions</strong>: Better than PSI which bins data
-- <strong>Small sample sizes</strong>: More robust than KS test</p>
+<h3 id="when-to-use-each-new-detector">When to Use Each New Detector<a class="headerlink" href="#when-to-use-each-new-detector" title="Permanent link">&para;</a></h3>
+<p><strong>Jensen-Shannon</strong> is particularly useful for:
+- <strong>Distribution comparison dashboards</strong>: Bounded 0-1 score is easy to visualize
+- <strong>Multi-model monitoring</strong>: Compare drift across models with a normalized score
+- <strong>Research applications</strong>: Well-known information-theoretic measure</p>
+<p><strong>Anderson-Darling</strong> is particularly useful for:
+- <strong>Financial modeling</strong>: Tail risk is critical
+- <strong>Anomaly detection pipelines</strong>: Outlier distribution changes
+- <strong>Quality control</strong>: When extreme values matter most</p>
+<p><strong>Cramér-von Mises</strong> is particularly useful for:
+- <strong>Multi-test pipelines</strong>: Complement KS test for more robust detection
+- <strong>General monitoring</strong>: Captures overall shape changes better than KS
+- <strong>Model validation</strong>: Comprehensive distributional comparison</p>
 <h3 id="threshold-tuning">Threshold Tuning<a class="headerlink" href="#threshold-tuning" title="Permanent link">&para;</a></h3>
 <p>Start with defaults and adjust based on:
 1. <strong>Sensitivity needs</strong>: Lower threshold = more sensitive
@@ -1770,12 +1946,24 @@
 3. <strong>Historical data</strong>: Analyze typical variation in your domain</p>
 <h3 id="combining-detectors">Combining Detectors<a class="headerlink" href="#combining-detectors" title="Permanent link">&para;</a></h3>
 <p>For critical features, monitor with multiple detectors:
-<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Monitor age with both PSI and Wasserstein</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">psi_result</span> <span class="o">=</span> <span class="n">psi_detector</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">ref</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">],</span> <span class="n">prod</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">])</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">wass_result</span> <span class="o">=</span> <span class="n">wasserstein_detector</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">ref</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">],</span> <span class="n">prod</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">])</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="k">if</span> <span class="n">psi_result</span><span class="o">.</span><span class="n">has_drift</span> <span class="ow">or</span> <span class="n">wass_result</span><span class="o">.</span><span class="n">has_drift</span><span class="p">:</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="n">alert</span><span class="p">(</span><span class="s2">&quot;Drift detected in age feature&quot;</span><span class="p">)</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Monitor age with multiple detectors for robust detection</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">driftwatch.detectors.numerical</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="n">PSIDetector</span><span class="p">,</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="n">JensenShannonDetector</span><span class="p">,</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="n">AndersonDarlingDetector</span><span class="p">,</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="p">)</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">psi</span> <span class="o">=</span> <span class="n">PSIDetector</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="n">jsd</span> <span class="o">=</span> <span class="n">JensenShannonDetector</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="n">ad</span> <span class="o">=</span> <span class="n">AndersonDarlingDetector</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="n">psi_result</span> <span class="o">=</span> <span class="n">psi</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">ref</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">],</span> <span class="n">prod</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">])</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="n">jsd_result</span> <span class="o">=</span> <span class="n">jsd</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">ref</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">],</span> <span class="n">prod</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">])</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="n">ad_result</span> <span class="o">=</span> <span class="n">ad</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">ref</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">],</span> <span class="n">prod</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">])</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="c1"># Ensemble: drift if any detector flags it</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="k">if</span> <span class="nb">any</span><span class="p">([</span><span class="n">psi_result</span><span class="o">.</span><span class="n">has_drift</span><span class="p">,</span> <span class="n">jsd_result</span><span class="o">.</span><span class="n">has_drift</span><span class="p">,</span> <span class="n">ad_result</span><span class="o">.</span><span class="n">has_drift</span><span class="p">]):</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>    <span class="n">alert</span><span class="p">(</span><span class="s2">&quot;Drift detected in age feature&quot;</span><span class="p">)</span>
 </span></code></pre></div></p>
 
 
