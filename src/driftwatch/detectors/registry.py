@@ -7,7 +7,14 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 
 from driftwatch.detectors.categorical import ChiSquaredDetector
-from driftwatch.detectors.numerical import KSDetector, PSIDetector, WassersteinDetector
+from driftwatch.detectors.numerical import (
+    AndersonDarlingDetector,
+    CramerVonMisesDetector,
+    JensenShannonDetector,
+    KSDetector,
+    PSIDetector,
+    WassersteinDetector,
+)
 
 if TYPE_CHECKING:
     from driftwatch.detectors.base import BaseDetector
@@ -67,7 +74,8 @@ def get_detector_by_name(
     Get detector by explicit name.
 
     Args:
-        name: Detector name ("ks", "psi", "wasserstein", "chi2")
+        name: Detector name ("ks", "psi", "wasserstein", "chi2",
+              "jensen_shannon", "anderson_darling", "cramer_von_mises")
         thresholds: Dictionary of threshold values
 
     Returns:
@@ -84,6 +92,15 @@ def get_detector_by_name(
         ),
         "chi2": lambda: ChiSquaredDetector(
             threshold=thresholds.get("chi2_pvalue", 0.05)
+        ),
+        "jensen_shannon": lambda: JensenShannonDetector(
+            threshold=thresholds.get("jensen_shannon", 0.1)
+        ),
+        "anderson_darling": lambda: AndersonDarlingDetector(
+            threshold=thresholds.get("anderson_darling_pvalue", 0.05)
+        ),
+        "cramer_von_mises": lambda: CramerVonMisesDetector(
+            threshold=thresholds.get("cramer_von_mises_pvalue", 0.05)
         ),
     }
 

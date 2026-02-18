@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### Added
+- 📊 **New Detectors** for enhanced drift detection:
+  - `JensenShannonDetector` — symmetric, bounded (0-1) divergence measure
+  - `AndersonDarlingDetector` — tail-sensitive hypothesis test
+  - `CramerVonMisesDetector` — overall distributional shape test
+- 📧 **Email Alerting** (`EmailAlerter`):
+  - SMTP-based email notifications with HTML formatting
+  - Throttling, custom subjects, and extra recipients support
+  - Both plain text and rich HTML email templates
+- 📈 **MLflow Integration** (`MLflowDriftTracker`):
+  - Log drift metrics and reports to MLflow experiments
+  - Track drift over time with MLflow tracking
+- 📖 Updated detector guide with comparison table and decision tree
+- 📖 Email integration documentation
+
+---
+
 ## [0.3.0] - 2026-02-09
 
 ### Added

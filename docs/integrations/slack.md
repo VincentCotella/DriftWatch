@@ -74,5 +74,7 @@ alerter = SlackAlerter(
 
 ## See Also
 
+- [Email Integration →](email.md)
 - [CLI Integration →](cli.md)
 - [FastAPI Integration →](fastapi.md)
+- [MLflow Integration →](mlflow.md)
