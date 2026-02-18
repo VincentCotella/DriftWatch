@@ -20,14 +20,19 @@
 
 ## 🚀 Features
 
-- **Simple API**: Detect drift in 3 lines of code.
-- **Multiple Detectors**: **PSI**, **KS-Test**, **Wasserstein Distance**, **Chi-Squared**.
-- **Production-Ready**:
-    - ⚡ **FastAPI Integration** (Middleware included).
-    - 🔔 **Slack Alerts** built-in.
-    - 🛠️ **CLI** for batch processing.
-- **Lightweight**: Minimal dependencies (`numpy`, `pandas`, `scipy`).
-- **Type-Safe**: 100% typed code with `mypy` support.
+- **Multi-Drift Monitoring**:
+    - 📊 **Feature Drift**: Monitor input data distribution changes (P(X)).
+    - 🎯 **Prediction Drift**: Monitor model output changes (P(Ŷ)).
+    - 🧠 **Concept Drift**: Monitor model performance degradation (P(Y|X)).
+- **Unified Interface**: `DriftSuite` combines all monitors in one simple API.
+- **7 Statistical Detectors**:
+    - **PSI**, **KS-Test**, **Wasserstein**, **Jensen-Shannon**, **Anderson-Darling**, **Cramér-von Mises**, **Chi-Squared**.
+- **Explainability**: Built-in statistical explanation (`DriftExplainer`) and visualization (`DriftVisualizer`).
+- **Production Integrations**:
+    - ⚡ **FastAPI** Middleware
+    - 📈 **MLflow** Tracking
+    - 🔔 **Slack** & **Email** Alerts
+- **Lightweight & Robust**: Minimal dependencies, 100% type-safe.
 
 ## 📦 Installation
 
@@ -35,27 +40,44 @@
 pip install driftwatch
 ```
 
-For extras (CLI, FastAPI, Alerting):
+For specific extras:
 ```bash
-pip install driftwatch[all]
+pip install driftwatch[viz]     # Visualization support
+pip install driftwatch[mlflow]  # MLflow integration
+pip install driftwatch[all]     # CLI, API, Alerting, etc.
 ```
 
 ## ⚡ Quick Start
 
+DriftWatch v0.4.0 introduces `DriftSuite` for unified monitoring:
+
 ```python
-from driftwatch import Monitor
+from driftwatch import DriftSuite, DriftType
 import pandas as pd
 
-# 1. Initialize monitor with reference data (e.g., training set)
-monitor = Monitor(reference_data=pd.read_parquet("train.parquet"))
+# 1. Initialize suite with reference data (e.g., training set)
+suite = DriftSuite(
+    reference_data=X_train,
+    reference_predictions=y_val_pred,
+    task="classification",  # or "regression"
+    model_version="v1.0"
+)
 
-# 2. Check production data for drift
-report = monitor.check(pd.read_parquet("production.parquet"))
+# 2. Check production batch
+report = suite.check(
+    production_data=X_prod,
+    production_predictions=y_prod_pred
+)
 
-# 3. Act on results
-if report.has_drift():
-    print(f"⚠️ Drift detected! Ratio: {report.drift_ratio():.1%}")
-    print(f"Drifted features: {report.drifted_features()}")
+# 3. Act on specific drift types
+drift_types = report.drift_types_detected()
+
+if DriftType.CONCEPT in drift_types:
+    print("🚨 CRITICAL: Concept drift detected — Retrain model!")
+elif DriftType.PREDICTION in drift_types:
+    print("⚠️ WARNING: Prediction drift — Check model outputs.")
+elif DriftType.FEATURE in drift_types:
+    print(f"📊 INFO: Feature drift in {report.feature_report.drifted_features()}")
 else:
     print("✅ All systems normal.")
 ```
@@ -64,10 +86,16 @@ else:
 
 | Scenario | Solution |
 |----------|----------|
-| **Real-time API** | Use `DriftMiddleware` in FastAPI to monitor every request. |
-| **Batch Job** | Use `driftwatch check` CLI in your Airflow/Cron jobs. |
-| **CI/CD** | Block deployments if validation data drifts from training data. |
-| **Alerting** | Send Slack notifications automatically when drift is critical. |
+| **Unified Monitoring** | Use `DriftSuite` to track Feature, Prediction, and Concept drift in one go. |
+| **Experiment Tracking** | Log all drift metrics to **MLflow** for long-term trend analysis. |
+| **Real-time API** | Use `DriftMiddleware` in **FastAPI** to monitor every request. |
+| **Alerting** | Send critical alerts via **Slack** or **Email** when model performance degrades. |
+| **CI/CD** | Block deployments if `DriftType.PREDICTION` is detected in staging. |
+
+## 📓 Interactive Tutorials
+
+- [**Multi-Drift Tutorial**](examples/notebooks/multi_drift_tutorial.ipynb) — Step-by-step guide to Feature, Prediction, and Concept drift.
+- [**Complete Showcase**](examples/notebooks/complete_showcase.ipynb) — Tour of all detectors, visualizers, and integrations.
 
 ## 🤝 Contributing
 

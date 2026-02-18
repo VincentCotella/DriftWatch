@@ -57,6 +57,7 @@ nav:
   - User Guide:
       - Drift Detectors: user-guide/detectors.md
       - Monitoring: user-guide/monitoring.md
+      - Drift Types: user-guide/drift-types.md
       - Reports: user-guide/reports.md
       - Thresholds: user-guide/thresholds.md
       - Drift Explain: user-guide/drift-explain.md
@@ -68,6 +69,7 @@ nav:
       - MLflow: integrations/mlflow.md
   - Examples:
       - Basic Usage: examples/basic.md
+      - Multi-Drift Monitoring: examples/multi-drift.md
       - Production Deployment: examples/production.md
       - Custom Detectors: examples/custom-detectors.md
       - Jupyter Notebooks: examples/notebooks.md
