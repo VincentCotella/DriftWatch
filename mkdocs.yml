@@ -64,6 +64,7 @@ nav:
       - FastAPI: integrations/fastapi.md
       - CLI: integrations/cli.md
       - Slack: integrations/slack.md
+      - Email: integrations/email.md
       - MLflow: integrations/mlflow.md
   - Examples:
       - Basic Usage: examples/basic.md

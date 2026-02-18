@@ -66,9 +66,9 @@ Released on **2026-02-09**. Available via `pip install driftwatch[viz]`.
 | **Drift Explain** — Detailed stats (mean shift, std change, quantile diffs) | P1 | ✅ Done |
 | **Drift Explain** — Visualization (histogram overlay ref vs prod) | P1 | ✅ Done |
 | Example Jupyter notebooks | P1 | ✅ Done |
-| MLflow integration (log drift to experiments) | P2 | 🔲 Todo |
-| Email alerting (SMTP) | P2 | 🔲 Todo |
-| More detectors (Jensen-Shannon, etc.) | P2 | 🔲 Todo |
+| MLflow integration (log drift to experiments) | P2 | ✅ Done |
+| Email alerting (SMTP) | P2 | ✅ Done |
+| More detectors (Jensen-Shannon, Anderson-Darling, Cramér-von Mises) | P2 | ✅ Done |
 
 ---
 
@@ -93,7 +93,7 @@ Released on **2026-02-09**. Available via `pip install driftwatch[viz]`.
 | Phase 2: Core Engine | ✅ Complete | 100% |
 | Phase 3: Integrations | ✅ Complete | 100% |
 | Phase 4: Docs & Release | ✅ Complete | 100% |
-| Phase 5: Enhancements (v0.3.0) | ✅ Complete | 50% |
+| Phase 5: Enhancements (v0.3.0) | ✅ Complete | 100% |
 
 ---
 
@@ -110,4 +110,4 @@ Each feature must satisfy:
 
 ---
 
-*Last updated: 2026-02-09*
+*Last updated: 2026-02-18*
