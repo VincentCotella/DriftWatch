@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "driftwatch"
-version = "0.3.0"
+version = "0.4.0"
 description = "Lightweight ML drift monitoring, built for real-world pipelines"
 readme = "README.md"
 license = {text = "MIT"}
@@ -88,11 +88,11 @@ docs = [
 driftwatch = "driftwatch.cli.main:app"
 
 [project.urls]
-Homepage = "https://github.com/YOUR_USERNAME/driftwatch"
-Documentation = "https://driftwatch.readthedocs.io"
-Repository = "https://github.com/YOUR_USERNAME/driftwatch"
-Issues = "https://github.com/YOUR_USERNAME/driftwatch/issues"
-Changelog = "https://github.com/YOUR_USERNAME/driftwatch/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/VincentCotella/DriftWatch"
+Documentation = "https://vincentcotella.github.io/DriftWatch/"
+Repository = "https://github.com/VincentCotella/DriftWatch"
+Issues = "https://github.com/VincentCotella/DriftWatch/issues"
+Changelog = "https://github.com/VincentCotella/DriftWatch/blob/main/CHANGELOG.md"
 
 [tool.setuptools.packages.find]
 where = ["src"]

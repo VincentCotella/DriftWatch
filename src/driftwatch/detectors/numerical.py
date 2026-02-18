@@ -196,3 +196,214 @@ class WassersteinDetector(BaseDetector):
             threshold=self.threshold,
             p_value=None,
         )
+
+
+class JensenShannonDetector(BaseDetector):
+    """
+    Jensen-Shannon divergence for numerical drift detection.
+
+    A symmetric and bounded (0-1) measure of similarity between
+    two probability distributions. Based on the KL divergence but
+    always finite and symmetric, making it more robust.
+
+    Args:
+        threshold: JSD value above which drift is detected.
+            Default is 0.1 (range: 0 to ln(2) ≈ 0.693 for base-e,
+            or 0 to 1 for base-2).
+        buckets: Number of buckets for binning. Default is 50.
+        base: Logarithm base (2 gives range [0,1]). Default is 2.
+
+    Example:
+        >>> detector = JensenShannonDetector(threshold=0.1)
+        >>> result = detector.detect(reference_series, production_series)
+        >>> print(f"JSD score: {result.score:.4f}")
+    """
+
+    def __init__(
+        self,
+        threshold: float = 0.1,
+        buckets: int = 50,
+        base: float = 2.0,
+    ) -> None:
+        super().__init__(threshold=threshold, name="jensen_shannon")
+        self.buckets = buckets
+        self.base = base
+
+    def detect(
+        self,
+        reference: pd.Series,
+        production: pd.Series,
+    ) -> DetectionResult:
+        """
+        Calculate Jensen-Shannon divergence between distributions.
+
+        The JSD is computed by binning both distributions and comparing
+        their probability mass functions.
+
+        Returns:
+            DetectionResult with JSD score (0 = identical, 1 = maximally different)
+        """
+        self._validate_inputs(reference, production)
+
+        ref_clean = reference.dropna().values
+        prod_clean = production.dropna().values
+
+        jsd = self._calculate_jsd(
+            np.asarray(ref_clean),
+            np.asarray(prod_clean),
+        )
+
+        return DetectionResult(
+            has_drift=jsd >= self.threshold,
+            score=float(jsd),
+            method=self.name,
+            threshold=self.threshold,
+            p_value=None,
+        )
+
+    def _calculate_jsd(
+        self,
+        reference: np.ndarray,
+        production: np.ndarray,
+    ) -> float:
+        """
+        Calculate Jensen-Shannon divergence using histogram binning.
+
+        JSD(P || Q) = 0.5 * KL(P || M) + 0.5 * KL(Q || M)
+        where M = 0.5 * (P + Q)
+        """
+        # Determine bin edges from combined data
+        combined = np.concatenate([reference, production])
+        bin_edges = np.histogram_bin_edges(combined, bins=self.buckets)
+
+        # Compute normalized histograms
+        ref_hist = np.histogram(reference, bins=bin_edges)[0].astype(float)
+        prod_hist = np.histogram(production, bins=bin_edges)[0].astype(float)
+
+        # Normalize to probability distributions
+        ref_prob = ref_hist / ref_hist.sum()
+        prod_prob = prod_hist / prod_hist.sum()
+
+        # Avoid log(0) by adding small epsilon
+        eps = 1e-12
+        ref_prob = np.clip(ref_prob, eps, 1.0)
+        prod_prob = np.clip(prod_prob, eps, 1.0)
+
+        # Mixture distribution M = 0.5 * (P + Q)
+        m_prob = 0.5 * (ref_prob + prod_prob)
+
+        # KL divergences
+        kl_pm: float = float(np.sum(ref_prob * np.log(ref_prob / m_prob)))
+        kl_qm: float = float(np.sum(prod_prob * np.log(prod_prob / m_prob)))
+
+        # Jensen-Shannon divergence
+        jsd = 0.5 * kl_pm + 0.5 * kl_qm
+
+        # Convert to base-2 if requested (gives [0, 1] range)
+        if self.base != np.e:
+            jsd = jsd / np.log(self.base)
+
+        return float(max(0.0, jsd))  # Ensure non-negative due to floating point
+
+
+class AndersonDarlingDetector(BaseDetector):
+    """
+    Anderson-Darling test for numerical drift detection.
+
+    A modification of the KS test that gives more weight to the tails
+    of the distribution, making it more sensitive to tail differences.
+
+    Uses the two-sample Anderson-Darling test from scipy.
+
+    Args:
+        threshold: Significance level below which drift is detected.
+            Default is 0.05 (5% significance level).
+
+    Example:
+        >>> detector = AndersonDarlingDetector(threshold=0.05)
+        >>> result = detector.detect(reference_series, production_series)
+        >>> print(f"Drift detected: {result.has_drift}")
+    """
+
+    def __init__(self, threshold: float = 0.05) -> None:
+        super().__init__(threshold=threshold, name="anderson_darling")
+
+    def detect(
+        self,
+        reference: pd.Series,
+        production: pd.Series,
+    ) -> DetectionResult:
+        """
+        Perform two-sample Anderson-Darling test.
+
+        Returns:
+            DetectionResult with AD statistic as score and
+            approximate significance level
+        """
+        self._validate_inputs(reference, production)
+
+        ref_clean = reference.dropna().values
+        prod_clean = production.dropna().values
+
+        result = stats.anderson_ksamp([ref_clean, prod_clean])
+        statistic = float(result.statistic)
+        # anderson_ksamp returns pvalue directly (scipy >= 1.7)
+        p_value = float(result.pvalue)
+
+        return DetectionResult(
+            has_drift=p_value < self.threshold,
+            score=statistic,
+            method=self.name,
+            threshold=self.threshold,
+            p_value=p_value,
+        )
+
+
+class CramerVonMisesDetector(BaseDetector):
+    """
+    Cramér-von Mises test for numerical drift detection.
+
+    Unlike the KS test which uses the maximum CDF difference,
+    the CvM test integrates the squared differences between
+    the CDFs, making it sensitive to overall distributional changes.
+
+    Args:
+        threshold: P-value threshold below which drift is detected.
+            Default is 0.05 (95% confidence).
+
+    Example:
+        >>> detector = CramerVonMisesDetector(threshold=0.05)
+        >>> result = detector.detect(reference_series, production_series)
+        >>> print(f"CvM statistic: {result.score:.4f}")
+    """
+
+    def __init__(self, threshold: float = 0.05) -> None:
+        super().__init__(threshold=threshold, name="cramer_von_mises")
+
+    def detect(
+        self,
+        reference: pd.Series,
+        production: pd.Series,
+    ) -> DetectionResult:
+        """
+        Perform two-sample Cramér-von Mises test.
+
+        Returns:
+            DetectionResult with CvM statistic and p-value
+        """
+        self._validate_inputs(reference, production)
+
+        ref_clean = reference.dropna().values
+        prod_clean = production.dropna().values
+
+        result = stats.cramervonmises_2samp(ref_clean, prod_clean)
+        statistic = float(result.statistic)
+        p_value = float(result.pvalue)
+
+        return DetectionResult(
+            has_drift=p_value < self.threshold,
+            score=statistic,
+            method=self.name,
+            threshold=self.threshold,
+            p_value=p_value,
+        )
