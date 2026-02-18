@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "driftwatch"
-version = "0.3.0"
+version = "0.4.0"
 description = "Lightweight ML drift monitoring, built for real-world pipelines"
 readme = "README.md"
 license = {text = "MIT"}

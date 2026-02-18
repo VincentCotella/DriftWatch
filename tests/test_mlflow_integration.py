@@ -565,7 +565,7 @@ class TestGetDriftwatchVersion:
         from driftwatch.integrations.mlflow import MLflowDriftTracker
 
         version = MLflowDriftTracker._get_driftwatch_version()
-        assert version == "0.3.0"
+        assert version == "0.4.0"
 
 
 # ---------------------------------------------------------------------------

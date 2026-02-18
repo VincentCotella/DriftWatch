@@ -31,7 +31,7 @@ from driftwatch.core.prediction_monitor import PredictionMonitor
 from driftwatch.core.report import ComprehensiveDriftReport, DriftReport, DriftType
 from driftwatch.explain import DriftExplainer, DriftVisualizer
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 __all__ = [
     "ComprehensiveDriftReport",
     "ConceptMonitor",

@@ -9,7 +9,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+---
+
+## [0.4.0] - 2026-02-18
+
 ### Added
+- 🎯 **Prediction Drift Monitoring** (`PredictionMonitor`):
+  - Monitor P(Ŷ) distribution changes between reference and production
+  - Supports regression (1D) and classification (per-class probabilities)
+  - Uses configurable detectors (PSI, KS, Jensen-Shannon, etc.)
+- 🧠 **Concept Drift Monitoring** (`ConceptMonitor`):
+  - Detect P(Y|X) changes by comparing performance metrics
+  - Classification: accuracy, precision, recall, F1, AUC-ROC
+  - Regression: MAE, MSE, RMSE, R², MAPE
+  - Absolute and relative degradation modes
+  - Zero external dependency (no sklearn required)
+- 🔗 **DriftSuite** — Unified multi-drift monitoring:
+  - Combines Feature, Prediction, and Concept drift in one interface
+  - `ComprehensiveDriftReport` with clear per-type sections
+  - `summary()`, `to_dict()`, `to_json()` for analysis and serialization
+- 🏷️ **DriftType Enum** (`FEATURE`, `PREDICTION`, `CONCEPT`):
+  - Every drift result now carries its drift type
+  - Clear separation in reports and programmatic handling
 - 📊 **New Detectors** for enhanced drift detection:
   - `JensenShannonDetector` — symmetric, bounded (0-1) divergence measure
   - `AndersonDarlingDetector` — tail-sensitive hypothesis test
@@ -17,12 +38,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 📧 **Email Alerting** (`EmailAlerter`):
   - SMTP-based email notifications with HTML formatting
   - Throttling, custom subjects, and extra recipients support
-  - Both plain text and rich HTML email templates
 - 📈 **MLflow Integration** (`MLflowDriftTracker`):
   - Log drift metrics and reports to MLflow experiments
-  - Track drift over time with MLflow tracking
-- 📖 Updated detector guide with comparison table and decision tree
-- 📖 Email integration documentation
+- 📓 **Notebooks**: Multi-drift monitoring tutorial, complete showcase
+- 📖 Updated documentation: monitoring guide, drift types, multi-drift example
+- ✅ Realistic integration tests (credit scoring, house pricing scenarios)
 
 ---
 
@@ -79,7 +99,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ---
 
 <!-- Links -->
-[Unreleased]: https://github.com/VincentCotella/DriftWatch/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/VincentCotella/DriftWatch/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/VincentCotella/DriftWatch/releases/tag/v0.4.0
 [0.3.0]: https://github.com/VincentCotella/DriftWatch/releases/tag/v0.3.0
 [0.2.0]: https://github.com/VincentCotella/DriftWatch/releases/tag/v0.2.0
 [0.1.0]: https://github.com/VincentCotella/DriftWatch/releases/tag/v0.1.0
+
