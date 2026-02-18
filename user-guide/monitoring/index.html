@@ -18,7 +18,7 @@
         <link rel="prev" href="../detectors/">
       
       
-        <link rel="next" href="../reports/">
+        <link rel="next" href="../drift-types/">
       
       
         
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#mlflow-integration" class="md-skip">
+        <a href="#monitoring-guide" class="md-skip">
           Skip to content
         </a>
       
@@ -762,10 +762,149 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
+  <a href="#types-of-drift" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Installation
+        Types of Drift
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Types of Drift">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#feature-drift-data-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feature Drift (Data Drift)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prediction-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prediction Drift
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#concept-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Concept Drift
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unified-monitoring-with-driftsuite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unified Monitoring with DriftSuite
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Unified Monitoring with DriftSuite">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#partial-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partial Checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#drifttype-enum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DriftType Enum
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comprehensivedriftreport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ComprehensiveDriftReport
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitoring Strategy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Monitoring Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommended-monitoring-levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended Monitoring Levels
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#production-pipeline-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Production Pipeline Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See Also
       
     </span>
   </a>
@@ -776,6 +915,34 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../drift-types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Drift Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1162,6 +1329,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/multi-drift/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Drift Monitoring
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/production/" class="md-nav__link">
         
   
@@ -1500,10 +1695,149 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
+  <a href="#types-of-drift" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Installation
+        Types of Drift
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Types of Drift">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#feature-drift-data-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Feature Drift (Data Drift)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prediction-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prediction Drift
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#concept-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Concept Drift
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unified-monitoring-with-driftsuite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unified Monitoring with DriftSuite
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Unified Monitoring with DriftSuite">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#partial-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partial Checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#drifttype-enum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DriftType Enum
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comprehensivedriftreport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ComprehensiveDriftReport
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitoring Strategy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Monitoring Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#recommended-monitoring-levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended Monitoring Levels
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#production-pipeline-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Production Pipeline Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See Also
       
     </span>
   </a>
@@ -1530,16 +1864,210 @@
   
 
 
-<h1 id="mlflow-integration">MLflow Integration<a class="headerlink" href="#mlflow-integration" title="Permanent link">&para;</a></h1>
-<p>Coming soon.</p>
-<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<p>\\ash
-pip install driftwatch[mlflow]
-\\
-"@ | Out-File -FilePath docs\integrations\mlflow.md -Encoding utf8;</p>
-<p>@"</p>
 <h1 id="monitoring-guide">Monitoring Guide<a class="headerlink" href="#monitoring-guide" title="Permanent link">&para;</a></h1>
-<p>Coming soon - comprehensive monitoring strategies and best practices.</p>
+<p>Learn how to monitor your ML models in production with DriftWatch.</p>
+<h2 id="types-of-drift">Types of Drift<a class="headerlink" href="#types-of-drift" title="Permanent link">&para;</a></h2>
+<p>DriftWatch supports three types of drift monitoring:</p>
+<table>
+<thead>
+<tr>
+<th>Drift Type</th>
+<th>What Changes</th>
+<th>Monitor Class</th>
+<th style="text-align: center;">Needs Labels?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Feature Drift</strong></td>
+<td>Input data distribution P(X)</td>
+<td><code>Monitor</code></td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td><strong>Prediction Drift</strong></td>
+<td>Model output distribution P(Ŷ)</td>
+<td><code>PredictionMonitor</code></td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td><strong>Concept Drift</strong></td>
+<td>Input-output relationship P(Y|X)</td>
+<td><code>ConceptMonitor</code></td>
+<td style="text-align: center;">✅</td>
+</tr>
+</tbody>
+</table>
+<h3 id="feature-drift-data-drift">Feature Drift (Data Drift)<a class="headerlink" href="#feature-drift-data-drift" title="Permanent link">&para;</a></h3>
+<p>The input data distribution has changed compared to training data. This is the most common and easiest to detect since it requires no ground truth labels.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">driftwatch</span><span class="w"> </span><span class="kn">import</span> <span class="n">Monitor</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">monitor</span> <span class="o">=</span> <span class="n">Monitor</span><span class="p">(</span><span class="n">reference_data</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;income&quot;</span><span class="p">,</span> <span class="s2">&quot;score&quot;</span><span class="p">])</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">report</span> <span class="o">=</span> <span class="n">monitor</span><span class="o">.</span><span class="n">check</span><span class="p">(</span><span class="n">X_production</span><span class="p">)</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">if</span> <span class="n">report</span><span class="o">.</span><span class="n">has_drift</span><span class="p">():</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature drift detected in: </span><span class="si">{</span><span class="n">report</span><span class="o">.</span><span class="n">drifted_features</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="prediction-drift">Prediction Drift<a class="headerlink" href="#prediction-drift" title="Permanent link">&para;</a></h3>
+<p>The distribution of model predictions has changed. This can happen when feature drift causes the model to produce different output patterns.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">driftwatch</span><span class="w"> </span><span class="kn">import</span> <span class="n">PredictionMonitor</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># Regression</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">monitor</span> <span class="o">=</span> <span class="n">PredictionMonitor</span><span class="p">(</span><span class="n">reference_predictions</span><span class="o">=</span><span class="n">y_val_pred</span><span class="p">)</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">report</span> <span class="o">=</span> <span class="n">monitor</span><span class="o">.</span><span class="n">check</span><span class="p">(</span><span class="n">y_prod_pred</span><span class="p">)</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># Classification (probabilities)</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">monitor</span> <span class="o">=</span> <span class="n">PredictionMonitor</span><span class="p">(</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="n">reference_predictions</span><span class="o">=</span><span class="n">y_val_proba</span><span class="p">,</span>  <span class="c1"># shape (n, n_classes)</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;classification&quot;</span><span class="p">,</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="n">class_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;negative&quot;</span><span class="p">,</span> <span class="s2">&quot;positive&quot;</span><span class="p">],</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="p">)</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="n">report</span> <span class="o">=</span> <span class="n">monitor</span><span class="o">.</span><span class="n">check</span><span class="p">(</span><span class="n">y_prod_proba</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="concept-drift">Concept Drift<a class="headerlink" href="#concept-drift" title="Permanent link">&para;</a></h3>
+<p>The relationship between inputs and outputs has changed. The model's learned patterns are no longer valid. This requires ground truth labels (delayed feedback).</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">driftwatch</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConceptMonitor</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># Classification</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">monitor</span> <span class="o">=</span> <span class="n">ConceptMonitor</span><span class="p">(</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;classification&quot;</span><span class="p">,</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">,</span> <span class="s2">&quot;f1&quot;</span><span class="p">,</span> <span class="s2">&quot;precision&quot;</span><span class="p">,</span> <span class="s2">&quot;recall&quot;</span><span class="p">],</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="p">)</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">report</span> <span class="o">=</span> <span class="n">monitor</span><span class="o">.</span><span class="n">check</span><span class="p">(</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    <span class="n">y_true_ref</span><span class="o">=</span><span class="n">y_val</span><span class="p">,</span> <span class="n">y_pred_ref</span><span class="o">=</span><span class="n">y_val_pred</span><span class="p">,</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="n">y_true_prod</span><span class="o">=</span><span class="n">y_prod</span><span class="p">,</span> <span class="n">y_pred_prod</span><span class="o">=</span><span class="n">y_prod_pred</span><span class="p">,</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="p">)</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="c1"># Regression</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="n">monitor</span> <span class="o">=</span> <span class="n">ConceptMonitor</span><span class="p">(</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;regression&quot;</span><span class="p">,</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;rmse&quot;</span><span class="p">,</span> <span class="s2">&quot;r2&quot;</span><span class="p">,</span> <span class="s2">&quot;mae&quot;</span><span class="p">],</span>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="p">)</span>
+</span></code></pre></div>
+<h2 id="unified-monitoring-with-driftsuite">Unified Monitoring with DriftSuite<a class="headerlink" href="#unified-monitoring-with-driftsuite" title="Permanent link">&para;</a></h2>
+<p><code>DriftSuite</code> combines all three drift types into a single interface:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">driftwatch</span><span class="w"> </span><span class="kn">import</span> <span class="n">DriftSuite</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">suite</span> <span class="o">=</span> <span class="n">DriftSuite</span><span class="p">(</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="n">reference_data</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="n">reference_predictions</span><span class="o">=</span><span class="n">y_val_pred</span><span class="p">,</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;classification&quot;</span><span class="p">,</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="n">model_version</span><span class="o">=</span><span class="s2">&quot;v1.2.0&quot;</span><span class="p">,</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="p">)</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="c1"># Full check (all three drift types)</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="n">report</span> <span class="o">=</span> <span class="n">suite</span><span class="o">.</span><span class="n">check</span><span class="p">(</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    <span class="n">production_data</span><span class="o">=</span><span class="n">X_prod</span><span class="p">,</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>    <span class="n">production_predictions</span><span class="o">=</span><span class="n">y_prod_pred</span><span class="p">,</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    <span class="n">y_true_ref</span><span class="o">=</span><span class="n">y_val</span><span class="p">,</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>    <span class="n">y_pred_ref</span><span class="o">=</span><span class="n">y_val_pred</span><span class="p">,</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>    <span class="n">y_true_prod</span><span class="o">=</span><span class="n">y_prod</span><span class="p">,</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>    <span class="n">y_pred_prod</span><span class="o">=</span><span class="n">y_prod_pred</span><span class="p">,</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="p">)</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="nb">print</span><span class="p">(</span><span class="n">report</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</span></code></pre></div>
+<h3 id="partial-checks">Partial Checks<a class="headerlink" href="#partial-checks" title="Permanent link">&para;</a></h3>
+<p>You don't have to provide all data at once. DriftSuite checks only the drift types for which data is available:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Feature drift only (most common)</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">report</span> <span class="o">=</span> <span class="n">suite</span><span class="o">.</span><span class="n">check</span><span class="p">(</span><span class="n">production_data</span><span class="o">=</span><span class="n">X_prod</span><span class="p">)</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># Feature + Prediction (no labels needed)</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">report</span> <span class="o">=</span> <span class="n">suite</span><span class="o">.</span><span class="n">check</span><span class="p">(</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="n">production_data</span><span class="o">=</span><span class="n">X_prod</span><span class="p">,</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="n">production_predictions</span><span class="o">=</span><span class="n">y_prod_pred</span><span class="p">,</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="p">)</span>
+</span></code></pre></div>
+<h2 id="drifttype-enum">DriftType Enum<a class="headerlink" href="#drifttype-enum" title="Permanent link">&para;</a></h2>
+<p>Every result carries a <code>drift_type</code> field for clear identification:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">driftwatch</span><span class="w"> </span><span class="kn">import</span> <span class="n">DriftType</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">report</span><span class="o">.</span><span class="n">feature_results</span><span class="p">:</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">drift_type</span> <span class="o">==</span> <span class="n">DriftType</span><span class="o">.</span><span class="n">FEATURE</span><span class="p">:</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature drift: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">feature_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="k">elif</span> <span class="n">result</span><span class="o">.</span><span class="n">drift_type</span> <span class="o">==</span> <span class="n">DriftType</span><span class="o">.</span><span class="n">PREDICTION</span><span class="p">:</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prediction drift: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">feature_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    <span class="k">elif</span> <span class="n">result</span><span class="o">.</span><span class="n">drift_type</span> <span class="o">==</span> <span class="n">DriftType</span><span class="o">.</span><span class="n">CONCEPT</span><span class="p">:</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Concept drift: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">feature_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<h2 id="comprehensivedriftreport">ComprehensiveDriftReport<a class="headerlink" href="#comprehensivedriftreport" title="Permanent link">&para;</a></h2>
+<p>The <code>ComprehensiveDriftReport</code> from <code>DriftSuite</code> provides:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Which drift types were detected</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">report</span><span class="o">.</span><span class="n">drift_types_detected</span><span class="p">()</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c1"># → [DriftType.FEATURE, DriftType.PREDICTION]</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1"># Overall status (worst across all types)</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="n">report</span><span class="o">.</span><span class="n">status</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1"># → DriftStatus.CRITICAL</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="c1"># Access individual reports</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="n">report</span><span class="o">.</span><span class="n">feature_report</span>      <span class="c1"># DriftReport or None</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="n">report</span><span class="o">.</span><span class="n">prediction_report</span>   <span class="c1"># DriftReport or None</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="n">report</span><span class="o">.</span><span class="n">concept_report</span>      <span class="c1"># DriftReport or None</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="c1"># Human-readable summary</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="nb">print</span><span class="p">(</span><span class="n">report</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="c1"># Serialization</span>
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="n">d</span> <span class="o">=</span> <span class="n">report</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="n">json_str</span> <span class="o">=</span> <span class="n">report</span><span class="o">.</span><span class="n">to_json</span><span class="p">()</span>
+</span></code></pre></div>
+<h2 id="monitoring-strategy">Monitoring Strategy<a class="headerlink" href="#monitoring-strategy" title="Permanent link">&para;</a></h2>
+<h3 id="recommended-monitoring-levels">Recommended Monitoring Levels<a class="headerlink" href="#recommended-monitoring-levels" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Level 1: Feature Drift Only (always available)
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>        → Run on every batch
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>        → Alert if drift_ratio &gt; 30%
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>Level 2: Feature + Prediction Drift (no labels needed)
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>        → Run on every batch
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>        → Correlate feature and prediction drift
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>Level 3: Full Suite (requires delayed labels)
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>        → Run when ground truth becomes available
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>        → Highest confidence: concept drift = model must be retrained
+</span></code></pre></div>
+<h3 id="production-pipeline-example">Production Pipeline Example<a class="headerlink" href="#production-pipeline-example" title="Permanent link">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">driftwatch</span><span class="w"> </span><span class="kn">import</span> <span class="n">DriftSuite</span><span class="p">,</span> <span class="n">DriftType</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">suite</span> <span class="o">=</span> <span class="n">DriftSuite</span><span class="p">(</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="n">reference_data</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    <span class="n">reference_predictions</span><span class="o">=</span><span class="n">y_val_pred</span><span class="p">,</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    <span class="n">task</span><span class="o">=</span><span class="s2">&quot;classification&quot;</span><span class="p">,</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>    <span class="n">model_version</span><span class="o">=</span><span class="s2">&quot;v1.2.0&quot;</span><span class="p">,</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="p">)</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="c1"># On every inference batch</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="n">report</span> <span class="o">=</span> <span class="n">suite</span><span class="o">.</span><span class="n">check</span><span class="p">(</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>    <span class="n">production_data</span><span class="o">=</span><span class="n">X_batch</span><span class="p">,</span>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>    <span class="n">production_predictions</span><span class="o">=</span><span class="n">y_batch_pred</span><span class="p">,</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="p">)</span>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="k">if</span> <span class="n">DriftType</span><span class="o">.</span><span class="n">FEATURE</span> <span class="ow">in</span> <span class="n">report</span><span class="o">.</span><span class="n">drift_types_detected</span><span class="p">():</span>
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>    <span class="n">send_alert</span><span class="p">(</span><span class="s2">&quot;Feature drift detected — investigate input data pipeline&quot;</span><span class="p">)</span>
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>
+</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="k">if</span> <span class="n">DriftType</span><span class="o">.</span><span class="n">PREDICTION</span> <span class="ow">in</span> <span class="n">report</span><span class="o">.</span><span class="n">drift_types_detected</span><span class="p">():</span>
+</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>    <span class="n">send_alert</span><span class="p">(</span><span class="s2">&quot;Prediction drift detected — model outputs are changing&quot;</span><span class="p">)</span>
+</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>
+</span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="c1"># When labels arrive (delayed)</span>
+</span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="k">if</span> <span class="n">labels_available</span><span class="p">:</span>
+</span><span id="__span-8-24"><a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a>    <span class="n">full_report</span> <span class="o">=</span> <span class="n">suite</span><span class="o">.</span><span class="n">check</span><span class="p">(</span>
+</span><span id="__span-8-25"><a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>        <span class="n">production_data</span><span class="o">=</span><span class="n">X_batch</span><span class="p">,</span>
+</span><span id="__span-8-26"><a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a>        <span class="n">production_predictions</span><span class="o">=</span><span class="n">y_batch_pred</span><span class="p">,</span>
+</span><span id="__span-8-27"><a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a>        <span class="n">y_true_ref</span><span class="o">=</span><span class="n">y_val</span><span class="p">,</span>
+</span><span id="__span-8-28"><a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a>        <span class="n">y_pred_ref</span><span class="o">=</span><span class="n">y_val_pred</span><span class="p">,</span>
+</span><span id="__span-8-29"><a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a>        <span class="n">y_true_prod</span><span class="o">=</span><span class="n">y_batch_true</span><span class="p">,</span>
+</span><span id="__span-8-30"><a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a>        <span class="n">y_pred_prod</span><span class="o">=</span><span class="n">y_batch_pred</span><span class="p">,</span>
+</span><span id="__span-8-31"><a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a>    <span class="p">)</span>
+</span><span id="__span-8-32"><a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a>
+</span><span id="__span-8-33"><a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a>    <span class="k">if</span> <span class="n">DriftType</span><span class="o">.</span><span class="n">CONCEPT</span> <span class="ow">in</span> <span class="n">full_report</span><span class="o">.</span><span class="n">drift_types_detected</span><span class="p">():</span>
+</span><span id="__span-8-34"><a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a>        <span class="n">send_alert</span><span class="p">(</span><span class="s2">&quot;CRITICAL: Concept drift — model retraining required&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../detectors/">Drift Detectors →</a> — Choose the right statistical test</li>
+<li><a href="../reports/">Reports →</a> — Understanding drift reports</li>
+<li><a href="../thresholds/">Thresholds →</a> — Tuning sensitivity</li>
+</ul>
 
 
 
