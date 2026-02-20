@@ -2,118 +2,118 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/architecture/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/changelog/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/contributing/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/detectors_guide/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/getting-started/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/api/detectors/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/api/integrations/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/api/monitor/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/api/reports/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/examples/basic/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/examples/custom-detectors/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/examples/multi-drift/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/examples/notebooks/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/examples/production/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/getting-started/concepts/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/getting-started/installation/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/getting-started/quickstart/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/integrations/cli/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/integrations/email/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/integrations/fastapi/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/integrations/mlflow/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/integrations/slack/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/user-guide/detectors/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/user-guide/drift-explain/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/user-guide/drift-types/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/user-guide/monitoring/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/user-guide/reports/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
     <url>
          <loc>https://vincentcotella.github.io/DriftWatch/user-guide/thresholds/</loc>
-         <lastmod>2026-02-18</lastmod>
+         <lastmod>2026-02-20</lastmod>
     </url>
 </urlset>
