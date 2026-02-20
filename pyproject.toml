@@ -211,6 +211,7 @@ omit = [
     "*/__init__.py",
     "*/integrations/*",  # Optional integrations require external deps
     "*/cli/*",  # Optional CLI interface
+    "*/dashboard/*",  # Optional Streamlit dashboard requires external deps
 ]
 
 [tool.coverage.report]
