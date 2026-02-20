@@ -270,5 +270,58 @@ def _display_dict_report(data: dict) -> None:
         console.print(table)
 
 
+@app.command()
+def dashboard(
+    port: Annotated[
+        int,
+        typer.Option(
+            "--port", "-p", help="Port to run the dashboard on (default: 8501)"
+        ),
+    ] = 8501,
+    browser: Annotated[
+        bool,
+        typer.Option(
+            "--no-browser", help="Disable auto-opening of the browser", is_flag=True
+        ),
+    ] = True,
+) -> None:
+    """Launch the interactive DriftWatch Streamlit dashboard.
+
+    Example:
+        driftwatch dashboard
+        driftwatch dashboard --port 8502
+    """
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    try:
+        import streamlit  # noqa: F401
+    except ImportError:
+        console.print(
+            "[bold red]❌ streamlit is not installed.[/bold red]\n"
+            "Install it with: [cyan]pip install driftwatch\\[dashboard\\][/cyan]"
+        )
+        raise typer.Exit(code=1) from None
+
+    app_path = Path(__file__).parent.parent / "dashboard" / "app.py"
+
+    args = [
+        sys.executable,
+        "-m",
+        "streamlit",
+        "run",
+        str(app_path),
+        f"--server.port={port}",
+        "--server.headless=false" if browser else "--server.headless=true",
+    ]
+
+    console.print(
+        f"[bold blue]🔍 DriftWatch Dashboard[/bold blue] — "
+        f"launching on [link=http://localhost:{port}]http://localhost:{port}[/link]"
+    )
+    subprocess.run(args, check=False)
+
+
 if __name__ == "__main__":
     app()

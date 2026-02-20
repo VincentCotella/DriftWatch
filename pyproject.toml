@@ -75,8 +75,12 @@ alerting = [
 viz = [
     "matplotlib>=3.5.0",
 ]
+dashboard = [
+    "streamlit>=1.30.0",
+    "matplotlib>=3.5.0",
+]
 all = [
-    "driftwatch[cli,fastapi,mlflow,alerting,viz]",
+    "driftwatch[cli,fastapi,mlflow,alerting,viz,dashboard]",
 ]
 docs = [
     "mkdocs>=1.5.0",
@@ -170,8 +174,13 @@ module = [
     "rich.*",
     "httpx.*",
     "matplotlib.*",
+    "streamlit.*",
 ]
 ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "streamlit.*"
+follow_imports = "skip"
 
 # ============================================================================
 # PYTEST CONFIGURATION
